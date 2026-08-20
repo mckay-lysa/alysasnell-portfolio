@@ -1,0 +1,12 @@
+node_modules
+dist
+coverage
+playwright-report
+test-results
+pnpm-lock.yaml
+.DS_Store
+
+# Hand-authored HTML documents — Prettier reflows these in ways that make the
+# diffs unreadable. Edit them by hand.
+docs/plan.html
+docs/design-system.html

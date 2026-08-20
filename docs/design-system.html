@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>alysasnell.com — Design System</title>
+
+<!--
+  ============================================================================
+  THE DESIGN SYSTEM for alysasnell.com
+
+  This is the human-readable version of src/styles/theme.css. Open it in a
+  browser to see every color, font, and component the site is built from.
+
+  >> THIS FILE AND src/styles/theme.css MUST STAY IN SYNC. <<
+
+  If you change a color here, change it in theme.css in the same pull request,
+  and vice versa. The token names below are the exact names used in the code.
+
+  This page is deliberately self-contained: no build step, no dependencies,
+  no internet required. Double-click it and it works.
+  ============================================================================
+-->
+
+<style>
+  /* ------------------------------------------------------------------------
+     THE PALETTE — these are the real values, copied from theme.css.
+     ------------------------------------------------------------------------ */
+  :root {
+    --as-bg: #FBF9F6;
+    --as-bg-soft: #FFFFFF;
+    --as-bg-deep: #F2EDE6;
+
+    --as-ink: #23201D;
+    --as-ink-dim: rgba(35, 32, 29, 0.68);
+    --as-ink-mute: rgba(35, 32, 29, 0.46);
+    --as-ink-faint: rgba(35, 32, 29, 0.24);
+
+    --as-rule: rgba(35, 32, 29, 0.12);
+    --as-rule-strong: rgba(35, 32, 29, 0.24);
+
+    --as-accent: #1F6F63;
+    --as-accent-deep: #17564C;
+    --as-accent-soft: rgba(31, 111, 99, 0.10);
+    --as-accent-ring: rgba(31, 111, 99, 0.34);
+    --as-on-accent: #FBF9F6;
+
+    --as-highlight: #C2703F;
+    --as-highlight-soft: rgba(194, 112, 63, 0.12);
+
+    --as-card: #FFFFFF;
+    --as-card-edge: rgba(35, 32, 29, 0.10);
+    --as-card-shadow: 0 1px 0 rgba(255,255,255,.6) inset, 0 8px 24px rgba(80,60,40,.06);
+
+    color-scheme: light;
+  }
+
+  :root[data-theme="dark"] {
+    --as-bg: #16181A;
+    --as-bg-soft: #1E2124;
+    --as-bg-deep: #101214;
+
+    --as-ink: #ECE8E2;
+    --as-ink-dim: rgba(236, 232, 226, 0.70);
+    --as-ink-mute: rgba(236, 232, 226, 0.48);
+    --as-ink-faint: rgba(236, 232, 226, 0.24);
+
+    --as-rule: rgba(236, 232, 226, 0.13);
+    --as-rule-strong: rgba(236, 232, 226, 0.26);
+
+    --as-accent: #5FBFAE;
+    --as-accent-deep: #7FD4C4;
+    --as-accent-soft: rgba(95, 191, 174, 0.13);
+    --as-accent-ring: rgba(95, 191, 174, 0.40);
+    --as-on-accent: #0F1A18;
+
+    --as-highlight: #E09A63;
+    --as-highlight-soft: rgba(224, 154, 99, 0.14);
+
+    --as-card: #1E2124;
+    --as-card-edge: rgba(236, 232, 226, 0.12);
+    --as-card-shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 8px 24px rgba(0,0,0,.4);
+
+    color-scheme: dark;
+  }
+
+  /* ------------------------------------------------------------------------
+     Page chrome for this document itself.
+     ------------------------------------------------------------------------ */
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 3rem 1.5rem 6rem;
+    background: var(--as-bg);
+    color: var(--as-ink);
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  main { max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; gap: 4rem; }
+
+  h1, h2, h3 {
+    font-family: Fraunces, Georgia, "Times New Roman", serif;
+    margin: 0;
+    text-wrap: balance;
+  }
+  h1 { font-size: clamp(2.2rem, 6vw, 3.2rem); line-height: 1.08; font-weight: 700; }
+  h2 { font-size: 1.6rem; font-weight: 700; }
+  h3 { font-size: 1rem; font-weight: 700; }
+  p  { margin: 0; }
+
+  section { display: flex; flex-direction: column; gap: 1.25rem; }
+
+  .eyebrow {
+    font-size: .7rem; font-weight: 700; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--as-ink-mute);
+  }
+  .lede { color: var(--as-ink-dim); max-width: 62ch; }
+  .note {
+    font-size: .88rem; color: var(--as-ink-dim);
+    border-left: 3px solid var(--as-highlight); padding-left: .85rem;
+  }
+
+  code, .mono {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: .82em;
+  }
+  code {
+    background: var(--as-accent-soft); color: var(--as-accent);
+    padding: .12em .4em; border-radius: 4px; white-space: nowrap;
+  }
+
+  /* --- Swatch grid --- */
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: .85rem; }
+  .swatch {
+    border: 1px solid var(--as-card-edge); border-radius: 10px;
+    overflow: hidden; background: var(--as-card);
+  }
+  .swatch .chip { height: 68px; border-bottom: 1px solid var(--as-card-edge); }
+  .swatch .meta { padding: .6rem .7rem; display: flex; flex-direction: column; gap: .15rem; }
+  .swatch .token { font-family: ui-monospace, Menlo, monospace; font-size: .76rem; font-weight: 600; }
+  .swatch .use   { font-size: .74rem; color: var(--as-ink-mute); line-height: 1.4; }
+  .swatch .hex   { font-family: ui-monospace, Menlo, monospace; font-size: .7rem; color: var(--as-ink-faint); }
+
+  /* --- Type scale --- */
+  .type-row {
+    display: flex; align-items: baseline; gap: 1.25rem;
+    padding: .9rem 0; border-bottom: 1px solid var(--as-rule); flex-wrap: wrap;
+  }
+  .type-row:last-child { border-bottom: 0; }
+  .type-label { flex: 0 0 8.5rem; font-size: .74rem; color: var(--as-ink-mute); font-family: ui-monospace, Menlo, monospace; }
+
+  .display-xl { font-family: Fraunces, Georgia, serif; font-size: 3.75rem; font-weight: 600; line-height: 1.08; }
+  .display-l  { font-family: Fraunces, Georgia, serif; font-size: 2.25rem; font-weight: 600; line-height: 1.15; }
+  .display-m  { font-family: Fraunces, Georgia, serif; font-size: 1.125rem; font-weight: 600; }
+  .body-l     { font-size: 1.5rem; color: var(--as-ink-dim); line-height: 1.5; }
+  .body-m     { font-size: 1rem; }
+  .body-s     { font-size: .875rem; color: var(--as-ink-dim); }
+  .caption    { font-size: .875rem; color: var(--as-ink-mute); }
+
+  /* --- Component demos --- */
+  .demo {
+    border: 1px solid var(--as-card-edge); border-radius: 12px;
+    background: var(--as-card); padding: 1.5rem;
+    display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;
+  }
+
+  .btn {
+    border: 0; border-radius: 999px; padding: .65rem 1.25rem;
+    font-size: .875rem; font-weight: 600; cursor: pointer; font-family: inherit;
+    transition: background-color .15s, color .15s;
+  }
+  .btn-primary   { background: var(--as-accent); color: var(--as-on-accent); }
+  .btn-primary:hover { background: var(--as-accent-deep); }
+  .btn-secondary { background: transparent; color: var(--as-ink); border: 1px solid var(--as-rule-strong); }
+  .btn-secondary:hover { background: var(--as-accent-soft); }
+  .btn-quiet     { background: transparent; color: var(--as-accent); padding-inline: .4rem; }
+  .btn-quiet:hover { text-decoration: underline; }
+  .btn:focus-visible { outline: 2px solid var(--as-accent); outline-offset: 3px; }
+
+  .stat { border-left: 2px solid var(--as-highlight); padding-left: .9rem; }
+  .stat b { display: block; font-size: 1.6rem; font-weight: 600; color: var(--as-highlight); font-variant-numeric: tabular-nums; }
+  .stat span { font-size: .85rem; color: var(--as-ink-dim); }
+
+  .card-demo {
+    border: 1px solid var(--as-card-edge); border-radius: 14px;
+    background: var(--as-card); box-shadow: var(--as-card-shadow);
+    padding: 1.1rem 1.25rem; max-width: 320px;
+  }
+
+  .chip-demo {
+    display: inline-block; background: var(--as-accent-soft); color: var(--as-accent);
+    border-radius: 999px; padding: .28rem .75rem; font-size: .78rem; font-weight: 600;
+  }
+
+  /* --- Spacing scale --- */
+  .space-row { display: flex; align-items: center; gap: 1rem; }
+  .space-bar { background: var(--as-accent-soft); border-left: 2px solid var(--as-accent); height: 1.5rem; }
+
+  /* --- Toggle --- */
+  .toggle {
+    position: fixed; top: 1rem; right: 1rem; z-index: 10;
+    background: var(--as-card); color: var(--as-ink-dim);
+    border: 1px solid var(--as-rule); border-radius: 999px;
+    padding: .4rem .9rem; font: inherit; font-size: .78rem; font-weight: 600; cursor: pointer;
+  }
+
+  table { border-collapse: collapse; width: 100%; font-size: .875rem; }
+  th, td { text-align: left; padding: .55rem .6rem; border-bottom: 1px solid var(--as-rule); vertical-align: top; }
+  th { font-size: .72rem; text-transform: uppercase; letter-spacing: .1em; color: var(--as-ink-mute); font-weight: 700; }
+</style>
+</head>
+
+<body>
+<button class="toggle" id="toggle" type="button">Dark</button>
+
+<main>
+
+  <header style="display:flex; flex-direction:column; gap:.9rem;">
+    <p class="eyebrow">alysasnell.com</p>
+    <h1>Design System</h1>
+    <p class="lede">
+      Every color, font, and shape the site is built from. This page is the picture;
+      <code>src/styles/theme.css</code> is the code. Change one, change the other — always in
+      the same pull request.
+    </p>
+    <p class="note">
+      <strong>This is a starting point, not a finished design.</strong> The palette below is a
+      sensible default so the site looks presentable on day one. Alysa should change it to
+      whatever she actually wants — that's the whole point of having it all in one place.
+      Flip this page to dark mode with the button in the corner to check both palettes.
+    </p>
+  </header>
+
+  <!-- ==================================================================== -->
+  <section>
+    <p class="eyebrow">01 — Foundation</p>
+    <h2>Color</h2>
+    <p class="lede">
+      Each swatch is a <em>token</em>. The token name is what the code uses, so
+      "make the buttons darker" means changing <code>--as-accent</code> once, and every
+      button on the site follows.
+    </p>
+
+    <h3 style="margin-top:.5rem">Surfaces</h3>
+    <div class="swatches">
+      <div class="swatch">
+        <div class="chip" style="background:var(--as-bg)"></div>
+        <div class="meta"><span class="token">--as-bg</span><span class="use">The page background</span><span class="hex">#FBF9F6 / #16181A</span></div>
+      </div>
+      <div class="swatch">
+        <div class="chip" style="background:var(--as-bg-soft)"></div>
+        <div class="meta"><span class="token">--as-bg-soft</span><span class="use">Raised surfaces</span><span class="hex">#FFFFFF / #1E2124</span></div>
+      </div>
+      <div class="swatch">
+        <div class="chip" style="background:var(--as-bg-deep)"></div>
+        <div class="meta"><span class="token">--as-bg-deep</span><span class="use">Alternating section bands</span><span class="hex">#F2EDE6 / #101214</span></div>
+      </div>
+      <div class="swatch">
+        <div class="chip" style="background:var(--as-card)"></div>
+        <div class="meta"><span class="token">--as-card</span><span class="use">Card background</span><span class="hex">#FFFFFF / #1E2124</span></div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:1rem">Text</h3>
+    <p class="body-s">One ink color at four strengths. Using a single hue keeps the page calm.</p>
+    <div class="swatches">
+      <div class="swatch">
+        <div class="chip" style="background:var(--as-ink)"></div>
+        <div class="meta"><span class="token">--as-ink</span><span class="use">Headings and body copy</span><span class="hex">#23201D / #ECE8E2</span></div>
+      </div>
+      <div class="swatch">
+        <div class="chip" style="background:var(--as-ink-dim)"></div>
+        <div class="meta"><span class="token">--as-ink-dim</span><span class="use">Secondary copy, descriptions</span><span class="hex">68% ink</span></div>
+      </div>
+      <div class="swatch">
+        <div class="chip" style="background:var(--as-ink-mute)"></div>
+        <div class="meta"><span class="token">--as-ink-mute</span><span class="use">Captions, dates, metadata</span><span class="hex">46% ink</span></div>
+      </div>
+      <div class="swatch">
+        <div class="chip" style="background:var(--as-ink-faint)"></div>
+        <div class="meta"><span class="token">--as-ink-faint</span><span class="use">Decorative, disabled</span><span class="hex">24% ink</span></div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:1rem">Accent &amp; highlight</h3>
+    <p class="body-s">
+      <strong>Accent</strong> is the brand color — buttons, links, active states. <strong>Highlight</strong>
+      is the second voice, reserved for the numbers that make her case. Two accents is the limit;
+      a third starts to look like a carnival.
+    </p>
+    <div class="swatches">
+      <div class="swatch">
+        <div class="chip" style="background:var(--as-accent)"></div>
+        <div class="meta"><span class="token">--as-accent</span><span class="use">Primary buttons, links</span><span class="hex">#1F6F63 / #5FBFAE</span></div>
+      </div>
+      <div class="swatch">
+        <div class="chip" style="background:var(--as-accent-deep)"></div>
+        <div class="meta"><span class="token">--as-accent-deep</span><span class="use">Hover and pressed states</span><span class="hex">#17564C / #7FD4C4</span></div>
+      </div>
+      <div class="swatch">
+        <div class="chip" style="background:var(--as-accent-soft); border-bottom:1px solid var(--as-card-edge)"></div>
+        <div class="meta"><span class="token">--as-accent-soft</span><span class="use">Tinted backgrounds, chips</span><span class="hex">10% accent</span></div>
+      </div>
+      <div class="swatch">
+        <div class="chip" style="background:var(--as-highlight)"></div>
+        <div class="meta"><span class="token">--as-highlight</span><span class="use">Stat numbers, emphasis</span><span class="hex">#C2703F / #E09A63</span></div>
+      </div>
+    </div>
+
+    <p class="note">
+      <strong>Contrast matters.</strong> Text has to stay readable against its background —
+      that's an accessibility requirement, not a preference. If you pick a new accent color,
+      check it at <a href="https://webaim.org/resources/contrastchecker/" style="color:var(--as-accent)">webaim.org/resources/contrastchecker</a>:
+      body text needs a ratio of at least 4.5:1, large headings at least 3:1.
+    </p>
+  </section>
+
+  <!-- ==================================================================== -->
+  <section>
+    <p class="eyebrow">02 — Foundation</p>
+    <h2>Typography</h2>
+    <p class="lede">
+      Two typefaces, bundled with the site so nothing is loaded from Google.
+      <strong>Fraunces</strong> (a warm serif) for headings, <strong>Inter</strong> for everything else.
+      The pairing reads as considered rather than corporate.
+    </p>
+    <p class="body-s">
+      Set in <code>--font-display</code> and <code>--font-sans</code> in <code>theme.css</code>.
+      <em>If these two fonts don't render on this page, install them or just read the sizes —
+      the site itself bundles them properly.</em>
+    </p>
+
+    <div class="demo" style="display:block; padding:1.25rem 1.5rem;">
+      <div class="type-row"><span class="type-label">display-xl</span><span class="display-xl">Alysa Snell</span></div>
+      <div class="type-row"><span class="type-label">display-l</span><span class="display-l">Experience</span></div>
+      <div class="type-row"><span class="type-label">display-m</span><span class="display-m">Head of Customer Success</span></div>
+      <div class="type-row"><span class="type-label">body-l</span><span class="body-l">Turning onboarding chaos into retention.</span></div>
+      <div class="type-row"><span class="type-label">body-m</span><span class="body-m">Standard paragraph text, used for most of the copy on the page.</span></div>
+      <div class="type-row"><span class="type-label">body-s</span><span class="body-s">Smaller supporting text inside cards and lists.</span></div>
+      <div class="type-row"><span class="type-label">caption</span><span class="caption">Apr 2021 — Present · Lindon, Utah</span></div>
+      <div class="type-row"><span class="type-label">eyebrow</span><span class="eyebrow">Selected work</span></div>
+    </div>
+  </section>
+
+  <!-- ==================================================================== -->
+  <section>
+    <p class="eyebrow">03 — Foundation</p>
+    <h2>Spacing &amp; shape</h2>
+    <p class="lede">
+      Consistent spacing is most of what makes a page look designed rather than assembled.
+      Stick to these steps instead of picking arbitrary numbers.
+    </p>
+    <div class="demo" style="display:block;">
+      <div style="display:flex; flex-direction:column; gap:.55rem;">
+        <div class="space-row"><span class="type-label">4px · gap-1</span><span class="space-bar" style="width:4px"></span></div>
+        <div class="space-row"><span class="type-label">8px · gap-2</span><span class="space-bar" style="width:8px"></span></div>
+        <div class="space-row"><span class="type-label">16px · gap-4</span><span class="space-bar" style="width:16px"></span></div>
+        <div class="space-row"><span class="type-label">24px · gap-6</span><span class="space-bar" style="width:24px"></span></div>
+        <div class="space-row"><span class="type-label">32px · gap-8</span><span class="space-bar" style="width:32px"></span></div>
+        <div class="space-row"><span class="type-label">64px · gap-16</span><span class="space-bar" style="width:64px"></span></div>
+        <div class="space-row"><span class="type-label">96px · section</span><span class="space-bar" style="width:96px"></span></div>
+      </div>
+    </div>
+    <table>
+      <tr><th>Rule</th><th>Value</th></tr>
+      <tr><td>Content column width</td><td><code>max-w-3xl</code> — 768px. Long lines are hard to read; this keeps them comfortable.</td></tr>
+      <tr><td>Section padding</td><td><code>--spacing-section</code> — 6rem top and bottom on desktop, less on phones.</td></tr>
+      <tr><td>Card corners</td><td><code>--radius-card</code> — 0.875rem.</td></tr>
+      <tr><td>Buttons</td><td>Fully rounded (<code>999px</code>) — friendlier than square corners.</td></tr>
+    </table>
+  </section>
+
+  <!-- ==================================================================== -->
+  <section>
+    <p class="eyebrow">04 — Components</p>
+    <h2>The pieces</h2>
+    <p class="lede">Everything on the site is built from these. They all read from the tokens above.</p>
+
+    <h3>Buttons</h3>
+    <div class="demo">
+      <button class="btn btn-primary" type="button">Get in touch</button>
+      <button class="btn btn-secondary" type="button">LinkedIn</button>
+      <button class="btn btn-quiet" type="button">View it →</button>
+      <span class="chip-demo">Shopify Plus</span>
+    </div>
+    <p class="body-s">
+      One primary button per screenful — it's the thing you most want clicked. Everything
+      else is secondary or quiet. Tab to a button to see the focus ring; that ring is how
+      keyboard users navigate, so it never gets removed.
+    </p>
+
+    <h3 style="margin-top:1rem">Stats</h3>
+    <p class="body-s">Her numbers are the portfolio. They get the highlight color and their own visual treatment.</p>
+    <div class="demo">
+      <div class="stat"><b>60+</b><span>boutique customers onboarded every month</span></div>
+      <div class="stat"><b>1,200+</b><span>Shopify store owners supported</span></div>
+    </div>
+
+    <h3 style="margin-top:1rem">Cards</h3>
+    <div class="demo">
+      <div class="card-demo">
+        <h3 style="font-size:.95rem">Ave Shops Help Center</h3>
+        <p class="body-s" style="margin-top:.4rem">A 40+ article help center built and maintained solo.</p>
+        <button class="btn btn-quiet" style="margin-top:.5rem; padding-left:0" type="button">View it →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================================== -->
+  <section>
+    <p class="eyebrow">05 — How to use this</p>
+    <h2>Changing the design</h2>
+    <table>
+      <tr><th>To change…</th><th>Edit</th></tr>
+      <tr><td>Any color, anywhere</td><td><code>src/styles/theme.css</code> — and the matching swatch on this page</td></tr>
+      <tr><td>The fonts</td><td><code>--font-display</code> / <code>--font-sans</code> in <code>theme.css</code></td></tr>
+      <tr><td>The words on the site</td><td><code>src/content/site.ts</code></td></tr>
+      <tr><td>Section order</td><td><code>src/pages/Home.tsx</code></td></tr>
+      <tr><td>Images, favicon</td><td><code>public/</code></td></tr>
+    </table>
+    <p class="note">
+      When you change a color in <code>theme.css</code>, <strong>change it in both palettes</strong> —
+      light and dark. A token defined only in light mode silently keeps the old value in dark
+      mode, and nobody notices until someone with dark mode on visits the site.
+    </p>
+  </section>
+
+</main>
+
+<script>
+  // Remember the reader's light/dark choice across visits.
+  (function () {
+    var root = document.documentElement;
+    var btn = document.getElementById("toggle");
+
+    function apply(theme) {
+      root.setAttribute("data-theme", theme);
+      btn.textContent = theme === "dark" ? "Light" : "Dark";
+      try { localStorage.setItem("as-ds-theme", theme); } catch (e) { /* private mode */ }
+    }
+
+    var saved;
+    try { saved = localStorage.getItem("as-ds-theme"); } catch (e) { /* private mode */ }
+    if (saved !== "dark" && saved !== "light") {
+      saved = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    apply(saved);
+
+    btn.addEventListener("click", function () {
+      apply(root.getAttribute("data-theme") === "dark" ? "light" : "dark");
+    });
+  })();
+</script>
+
+</body>
+</html>

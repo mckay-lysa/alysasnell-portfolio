@@ -1,0 +1,47 @@
+/* Entry stylesheet. Pulls in Tailwind, then our design system, then the small
+   set of global base styles. Component styling belongs in the components as
+   Tailwind classes — not here. Color values belong in theme.css — not here. */
+
+@import "tailwindcss";
+@import "./theme.css";
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    background-color: var(--as-bg);
+    background-image: var(--as-ambient);
+    background-attachment: fixed;
+    color: var(--as-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+
+  /* A single visible focus style for every interactive element. */
+  :focus-visible {
+    outline: 2px solid var(--as-accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background-color: var(--as-accent-soft);
+    color: var(--as-ink);
+  }
+}

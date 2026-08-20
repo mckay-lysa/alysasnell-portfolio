@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <title>Alysa Snell — Head of Customer Success</title>
+    <meta
+      name="description"
+      content="Head of Customer Success and Account Management in e-commerce and SaaS. I turn onboarding chaos into retention."
+    />
+
+    <!-- Link previews (iMessage, Slack, LinkedIn) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://alysasnell.com/" />
+    <meta property="og:title" content="Alysa Snell — Head of Customer Success" />
+    <meta
+      property="og:description"
+      content="Head of Customer Success and Account Management in e-commerce and SaaS. I turn onboarding chaos into retention."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script>
+      // Set the theme before first paint so there's no flash of the wrong one.
+      // Priority: the visitor's saved choice → their OS preference → light.
+      (function () {
+        var t;
+        try {
+          t = localStorage.getItem("as-theme");
+        } catch (e) {
+          /* localStorage can throw in private mode — fall through */
+        }
+        if (t !== "dark" && t !== "light") {
+          try {
+            t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+          } catch (e) {
+            t = "light";
+          }
+        }
+        document.documentElement.setAttribute("data-theme", t);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

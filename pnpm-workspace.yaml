@@ -1,0 +1,27 @@
+# pnpm workspace config.
+#
+# This file is load-bearing even though the repo is a single package: since
+# pnpm v11, dependency `overrides` and the dependency build-script allowlist
+# MUST live here (pnpm no longer reads the "pnpm" field in package.json).
+#
+# There is intentionally no `packages:` key — this is a single-package repo, and
+# listing "." as a workspace package makes pnpm hang on install.
+#
+# Dependency build scripts are blocked by default (supply-chain hardening).
+# Anything that genuinely needs its postinstall to run gets listed here with a
+# reason. Keep this list as short as possible.
+allowBuilds:
+  # esbuild works fine without its postinstall — the platform binary resolves
+  # through optionalDependencies. (Vite 8 uses Rolldown, so this is only for
+  # any transitive esbuild that sneaks in.)
+  esbuild: false
+# McKay's global pnpm config sets a `minimumReleaseAge` — packages published
+# more recently than that threshold are held back, so a compromised release
+# can't be installed the hour it lands. These three were newer than the
+# threshold when the project was scaffolded and were deliberately allowed
+# through. Entries can be dropped once they age past it; pnpm re-adds any it
+# still needs on the next install.
+minimumReleaseAgeExclude:
+  - "@vitejs/plugin-react@6.1.0"
+  - happy-dom@20.11.6
+  - vite@8.2.2

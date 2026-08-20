@@ -1,0 +1,458 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alysa's Website Playbook</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --paper: #F6F7F9;
+    --card: #FFFFFF;
+    --ink: #1C2430;
+    --muted: #5A6575;
+    --line: #DDE2E9;
+    --her: #0E7A74;
+    --her-soft: #E2F1EF;
+    --you: #4A56C6;
+    --you-soft: #E8EAF9;
+    --warn: #B97A18;
+    --warn-soft: #F7EDDA;
+    --ok: #2E7D46;
+  }
+  :root:not([data-theme="light"]) { }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #14181F;
+      --card: #1C222C;
+      --ink: #E8ECF2;
+      --muted: #9AA5B4;
+      --line: #313A48;
+      --her: #4CC5BC;
+      --her-soft: #12332F;
+      --you: #99A3F0;
+      --you-soft: #232A4A;
+      --warn: #E0A94E;
+      --warn-soft: #3A2E15;
+      --ok: #6BC386;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #14181F;
+    --card: #1C222C;
+    --ink: #E8ECF2;
+    --muted: #9AA5B4;
+    --line: #313A48;
+    --her: #4CC5BC;
+    --her-soft: #12332F;
+    --you: #99A3F0;
+    --you-soft: #232A4A;
+    --warn: #E0A94E;
+    --warn-soft: #3A2E15;
+    --ok: #6BC386;
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Public Sans", system-ui, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 3rem 1.25rem 5rem;
+  }
+  main { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 2.75rem; }
+  h1, h2, h3 { font-family: "Bricolage Grotesque", "Public Sans", sans-serif; text-wrap: balance; margin: 0; }
+  h1 { font-size: 2.6rem; font-weight: 800; line-height: 1.1; }
+  h2 { font-size: 1.45rem; font-weight: 700; }
+  h3 { font-size: 1.05rem; font-weight: 700; }
+  p { margin: 0; }
+  section { display: flex; flex-direction: column; gap: 1rem; }
+  .eyebrow {
+    font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .lede { font-size: 1.1rem; color: var(--muted); max-width: 60ch; }
+  .mono { font-family: "IBM Plex Mono", monospace; font-size: .86em; }
+  code {
+    font-family: "IBM Plex Mono", monospace; font-size: .85em;
+    background: var(--card); border: 1px solid var(--line);
+    padding: .1em .35em; border-radius: 5px; white-space: nowrap;
+  }
+
+  /* verdict strip */
+  .verdict {
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 1.25rem 1.4rem; display: flex; flex-direction: column; gap: .5rem;
+  }
+  .verdict strong { color: var(--her); }
+
+  /* the loop */
+  .loop { display: flex; flex-direction: column; gap: .5rem; }
+  .loop-row { display: flex; align-items: stretch; gap: .5rem; flex-wrap: wrap; }
+  .step {
+    flex: 1 1 130px; background: var(--card); border: 1px solid var(--line);
+    border-radius: 10px; padding: .7rem .8rem; display: flex; flex-direction: column; gap: .15rem;
+    border-top: 3px solid var(--line);
+  }
+  .step.her { border-top-color: var(--her); }
+  .step.you { border-top-color: var(--you); }
+  .step.bot { border-top-color: var(--muted); }
+  .step b { font-size: .9rem; }
+  .step span { font-size: .8rem; color: var(--muted); line-height: 1.4; }
+  .who { font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+  .her .who { color: var(--her); }
+  .you .who { color: var(--you); }
+  .bot .who { color: var(--muted); }
+  .loop-note { font-size: .85rem; color: var(--muted); }
+
+  /* decision cards */
+  .decisions { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+  @media (max-width: 560px) { .decisions { grid-template-columns: 1fr; } }
+  .dcard {
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    padding: .9rem 1rem; display: flex; flex-direction: column; gap: .3rem;
+  }
+  .dcard .eyebrow { font-size: .66rem; }
+  .dcard b { font-size: .95rem; }
+  .dcard span { font-size: .84rem; color: var(--muted); line-height: 1.45; }
+
+  /* rules table */
+  .rules { display: flex; flex-direction: column; gap: .5rem; }
+  .rule {
+    display: flex; gap: .8rem; align-items: baseline;
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: .7rem .9rem;
+  }
+  .pill {
+    flex: 0 0 auto; font-size: .68rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    padding: .15rem .5rem; border-radius: 999px;
+  }
+  .pill.go { background: var(--her-soft); color: var(--her); }
+  .pill.stop { background: var(--warn-soft); color: var(--warn); }
+  .rule p { font-size: .9rem; }
+
+  /* tree */
+  pre.tree {
+    font-family: "IBM Plex Mono", monospace; font-size: .82rem; line-height: 1.55;
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 1.1rem 1.3rem; overflow-x: auto; margin: 0;
+  }
+  pre.tree .c { color: var(--muted); }
+  pre.tree .f { color: var(--warn); }
+
+  /* checklist */
+  ol.check { margin: 0; padding-left: 1.3rem; display: flex; flex-direction: column; gap: .55rem; }
+  ol.check li { font-size: .95rem; }
+  ol.check li span { color: var(--muted); font-size: .87rem; }
+
+  ul.plain { margin: 0; padding-left: 1.2rem; display: flex; flex-direction: column; gap: .45rem; }
+  ul.plain li { font-size: .92rem; }
+  ul.plain li span { color: var(--muted); }
+
+  .cost {
+    display: flex; gap: .75rem; flex-wrap: wrap;
+  }
+  .cost div {
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    padding: .7rem 1rem; flex: 1 1 140px;
+  }
+  .cost b { font-size: 1.2rem; font-variant-numeric: tabular-nums; }
+  .cost span { display: block; font-size: .8rem; color: var(--muted); }
+
+  /* guide */
+  details.phase {
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 0; overflow: hidden;
+  }
+  details.phase summary {
+    cursor: pointer; padding: .85rem 1.1rem; font-weight: 700;
+    font-family: "Bricolage Grotesque", "Public Sans", sans-serif; font-size: 1rem;
+    list-style: none; display: flex; align-items: baseline; gap: .6rem;
+  }
+  details.phase summary::-webkit-details-marker { display: none; }
+  details.phase summary::before { content: "▸"; color: var(--muted); font-size: .8em; }
+  details.phase[open] summary::before { content: "▾"; }
+  details.phase summary .tag { font-size: .68rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-left: auto; }
+  .phase-body { padding: 0 1.2rem 1.1rem; display: flex; flex-direction: column; gap: .8rem; border-top: 1px solid var(--line); padding-top: .9rem; }
+  .phase-body h3 { font-size: .92rem; }
+  .phase-body ol { margin: 0; padding-left: 1.25rem; display: flex; flex-direction: column; gap: .4rem; }
+  .phase-body ol li { font-size: .9rem; }
+  .phase-body .note { font-size: .82rem; color: var(--muted); border-left: 3px solid var(--line); padding-left: .7rem; }
+  .phase-body .flag { font-size: .82rem; color: var(--warn); border-left: 3px solid var(--warn); padding-left: .7rem; }
+  .ui { font-weight: 600; }
+  .src { font-size: .78rem; color: var(--muted); }
+  .src a { color: var(--muted); }
+
+  .sources { font-size: .85rem; color: var(--muted); }
+  .sources a { color: var(--you); }
+  a { color: var(--you); }
+</style>
+
+<main>
+  <header style="display:flex;flex-direction:column;gap:.75rem;">
+    <p class="eyebrow">alysasnell.com · the plan</p>
+    <h1>Alysa's Website Playbook</h1>
+    <p class="lede">How we set up Alysa's portfolio site so she can vibe-code changes by voice, never look at the code, never break the live site — and you spend two minutes per change approving it.</p>
+  </header>
+
+  <section>
+    <div class="verdict">
+      <h2>The short version</h2>
+      <p>She owns everything (GitHub, Cloudflare, domain) — <strong>you operate it</strong> as a collaborator/admin under your own logins, so you never need her passwords. She talks to Claude in the Mac desktop app using a <strong>cloud environment</strong>, so her computer needs <em>zero</em> dev tools installed. Every change becomes a pull request with automatic checks and a live preview link. She texts you the link, you glance at it, hit merge, and the site updates. She literally cannot break production — main is protected.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>The change loop</h2>
+    <p class="lede" style="font-size:.95rem;">This is what happens every time she wants to tweak something. Teal steps are hers, gray steps are automatic, purple steps are yours.</p>
+    <div class="loop">
+      <div class="loop-row">
+        <div class="step her"><span class="who">Alysa</span><b>1 · Says what she wants</b><span>Opens Claude app → Code tab → Cloud. Talks with /voice: "make the header photo bigger."</span></div>
+        <div class="step bot"><span class="who">Claude</span><b>2 · Makes the change</b><span>Cloud sandbox clones the repo, edits, follows CLAUDE.md rules, opens a PR.</span></div>
+        <div class="step bot"><span class="who">Robots</span><b>3 · Checks run</b><span>CI: types, lint, build. Cloudflare posts a preview URL of the new version.</span></div>
+      </div>
+      <div class="loop-row">
+        <div class="step her"><span class="who">Alysa</span><b>4 · Texts you the PR link</b><span>Claude's last step is always: "send this link to McKay." She can view the preview herself too.</span></div>
+        <div class="step you"><span class="who">McKay</span><b>5 · Two-minute review</b><span>Tap link → look at preview → skim diff → merge. GitHub also pings you as required reviewer.</span></div>
+        <div class="step bot"><span class="who">Robots</span><b>6 · Live</b><span>Merge to main auto-deploys to alysasnell.com. Done.</span></div>
+      </div>
+      <p class="loop-note">If a check fails, CLAUDE.md tells Claude to fix it <em>before</em> asking her to text you — red PRs never reach your phone.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Decisions we locked in</h2>
+    <div class="decisions">
+      <div class="dcard"><p class="eyebrow">Accounts</p><b>Her GitHub + her Cloudflare</b><span>You're a collaborator on GitHub and an Administrator member on her Cloudflare — you always log in as yourself, so you never need her credentials for anything day-to-day, and her password changes can't lock you out.</span></div>
+      <div class="dcard"><p class="eyebrow">Passwords</p><b>Offer her a spot on your 1Password Families</b><span>Families is $5.99/mo billed annually ($71.88/yr) and includes 5 members — you + wife leaves 3 free seats, so adding her costs $0 extra (her "split" would be ~$36/yr if you want). Then her own 1PW account stores her creds + 2FA recovery codes and no backup vault of yours is needed. If she declines: keep an "Alysa" vault in your account as break-glass insurance for <em>her</em> lockouts (recovery codes especially) — optional, your call.</span></div>
+      <div class="dcard"><p class="eyebrow">Repo visibility</p><b>Public repo</b><span>Verified: on a free GitHub account, branch protection, rulesets, and CODEOWNERS enforcement only work on <em>public</em> repos (private needs Pro, $4/mo). A portfolio site's code is fine public — and it becomes a portfolio piece for both of you. All guardrails then work free.</span></div>
+      <div class="dcard"><p class="eyebrow">Domain</p><b>alysasnell.com</b><span>Registered on her Cloudflare account (~$10/yr). Site hosted on Cloudflare Pages there too — free tier, unlimited bandwidth, automatic PR previews.</span></div>
+      <div class="dcard"><p class="eyebrow">Her setup</p><b>Cloud Claude Code, $20 Pro plan</b><span>Desktop app → Code tab → Cloud environment. Confirmed: works on Pro, connects via the GitHub app during onboarding, and opens PRs directly. Nothing installed on her Mac except the Claude app. (Voice in the Code tab isn't officially documented — if it's not there, macOS dictation covers it.)</span></div>
+      <div class="dcard"><p class="eyebrow">Your setup</p><b>Local CLI with full toolchain</b><span>You keep a clone with Playwright MCP for the v1 build-out and heavy redesigns. Claude self-checks visually in a real browser before pushing.</span></div>
+      <div class="dcard"><p class="eyebrow">Stack</p><b>React + Vite + TypeScript + Tailwind + pnpm</b><span>Your muscle memory, Claude's strongest stack. TypeScript is a free adversarial reviewer — broken code fails CI before it reaches you.</span></div>
+      <div class="dcard"><p class="eyebrow">Safety model</p><b>PR + human review, no auto-merge</b><span>Branch protection on main: PRs only, your approval required, checks must pass. We skipped AI review bots — CI plus your eyeballs is cheaper and better for a UI site.</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Guardrails (what CLAUDE.md enforces)</h2>
+    <div class="rules">
+      <div class="rule"><span class="pill go">Free</span><p><code>src/</code> and <code>public/</code> — components, pages, styles, text, images. Vibe away.</p></div>
+      <div class="rule"><span class="pill stop">Frozen</span><p>CI workflows, <code>dependabot.yml</code>, CODEOWNERS, <code>package.json</code> dependencies, <code>pnpm-workspace.yaml</code>, all config files, and CLAUDE.md itself. Only McKay working locally can authorize a change — an instruction from Alysa is explicitly <em>not</em> sufficient. Those changes go in their own PR labeled <code>infra</code>, called out loudly in the description.</p></div>
+      <div class="rule"><span class="pill stop">Never</span><p>Weaken a check to make CI go green. If lint fails, fix the code — not the rule. Deleting a check disables the safety net without anyone noticing, which is the one failure mode this whole setup exists to prevent.</p></div>
+      <div class="rule"><span class="pill go">Colors</span><p>Every color lives in <code>src/styles/theme.css</code> as a token, mirrored in <code>docs/design-system.html</code>. Components never hardcode a hex. "Make the buttons warmer" = edit one token, and every button follows.</p></div>
+      <div class="rule"><span class="pill go">Always</span><p>Branch → PR. Never push to main. Run every check — format, lint, types, unit tests, build, browser tests — and fix red before Alysa ever sees the link. End by handing her the PR link to text McKay.</p></div>
+      <div class="rule"><span class="pill stop">Never</span><p>Add a dependency casually. Claude <em>may</em> install one that earns its place — maintained, small, not replaceable by 20 lines of our own code — but must weigh it and say so in the PR description. Never silently.</p></div>
+      <div class="rule"><span class="pill stop">Never</span><p>Ask Alysa a technical question. She decides <em>how it looks</em>, McKay decides <em>how it's built</em>. If Claude is stuck on something technical, it says "this one's for McKay" and stops rather than guessing.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Repo layout</h2>
+<pre class="tree">alysasnell.com/
+├── CLAUDE.md                  <span class="c">← behavioral rules (short, blunt)</span> <span class="f">frozen</span>
+├── README.md                  <span class="c">← stack, scripts, where things live</span>
+├── SETUP-CHECKLIST.md         <span class="c">← McKay's one-time to-do list</span>
+├── .github/
+│   ├── workflows/ci.yml       <span class="c">← format · lint · types · test · build · e2e</span> <span class="f">frozen</span>
+│   ├── dependabot.yml         <span class="c">← grouped weekly dependency PRs</span> <span class="f">frozen</span>
+│   ├── CODEOWNERS             <span class="c">← McKay = required reviewer</span> <span class="f">frozen</span>
+│   └── pull_request_template.md
+├── docs/
+│   ├── plan.html              <span class="c">← this file</span>
+│   ├── design-system.html     <span class="c">← the palette, browsable. Alysa's file.</span>
+│   ├── content/linkedin.md    <span class="c">← source material for the copy</span>
+│   └── design/
+│       ├── inspiration/       <span class="c">← screenshots of sites she likes</span>
+│       └── mockups/           <span class="c">← Figma / Canva / Claude Design exports</span>
+├── src/
+│   ├── styles/theme.css       <span class="c">← EVERY color + font, one file</span>
+│   ├── content/site.ts        <span class="c">← EVERY word on the site</span>
+│   ├── components/            <span class="c">← Hero, Section, Footer, ThemeToggle</span>
+│   └── pages/Home.tsx         <span class="c">← section order</span>
+├── e2e/                       <span class="c">← Playwright browser tests</span>
+└── public/                    <span class="c">← images, favicon</span></pre>
+    <p class="loop-note">Two files carry almost all the day-to-day change: <code>src/content/site.ts</code> for words, <code>src/styles/theme.css</code> for looks. That's deliberate — it means "make the headline warmer" is a one-line edit in a file whose whole job is colors, not a hunt through components. <code>docs/design-system.html</code> is the same palette rendered as a page she can actually look at; CLAUDE.md requires the two to be updated together.</p>
+  </section>
+
+  <section>
+    <h2>What goes on the site</h2>
+    <p class="lede" style="font-size:.95rem;">From her LinkedIn (saved to <span class="mono">docs/content/linkedin.md</span>): she's Head of Customer Success &amp; Account Management in e-commerce/SaaS, targeting Director-level CS roles. Professional-first, with room to add personal stuff later.</p>
+    <ul class="plain">
+      <li><b>Hero</b> <span>— name, headline ("I help e-commerce and SaaS companies turn onboarding chaos into retention"), photo, contact CTA.</span></li>
+      <li><b>Wins with numbers</b> <span>— 60+ onboardings/month, 1,200+ store owners supported, 90-user API migration in 30 days with zero disruption, 40+ article help center. These stats ARE the portfolio.</span></li>
+      <li><b>Experience timeline</b> <span>— Avenue Shops → DM Fashion (COO) → earlier roles.</span></li>
+      <li><b>Featured work</b> <span>— the Ave Shops Help Center she built solo, plus tools she lives in (Shopify Plus, WMS, Intercom, CRM).</span></li>
+      <li><b>About + contact</b> <span>— warmer personal section, LinkedIn link, email. Resume download later if she wants.</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Step-by-step setup guide</h2>
+    <p class="lede" style="font-size:.95rem;">Do these in order. Every UI step below was verified against official docs on Aug 20, 2026 (links inside each phase). Anything the docs don't confirm is flagged in amber.</p>
+
+    <details class="phase" open>
+      <summary>Phase 0 · Scaffold the repo <span class="tag">✅ done</span></summary>
+      <div class="phase-body">
+        <p style="font-size:.9rem;">Built and verified locally on 2026-08-20. React 19 · TypeScript 6 · Vite 8 · Tailwind 4 · pnpm 11 · Node 24.</p>
+        <ul class="plain">
+          <li><b>Guardrails</b> <span>— CLAUDE.md, CODEOWNERS, PR template, CI workflow, dependabot.yml.</span></li>
+          <li><b>Design system</b> <span>— <code>src/styles/theme.css</code> (the tokens) + <code>docs/design-system.html</code> (the browsable version).</span></li>
+          <li><b>Tests</b> <span>— Vitest unit tests plus Playwright end-to-end tests that run against a real production build in Chrome and mobile Safari.</span></li>
+          <li><b>Placeholder page</b> <span>— hero, stats, experience, work, contact, light/dark toggle, populated from her LinkedIn as a first draft.</span></li>
+        </ul>
+        <p class="note">All checks verified green locally: <code>format:check</code>, <code>lint</code>, <code>typecheck</code>, <code>test</code>, <code>build</code>, and 10/10 e2e tests. The CI workflow was validated with <code>actionlint</code>, and every YAML file parsed. Rendering was confirmed in a real browser at 375px and 1440px, in both light and dark mode.</p>
+        <p style="font-size:.9rem;">Re-verify anytime: <code>pnpm install && pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm e2e</code></p>
+        <p class="flag">TypeScript is pinned to 6.x on purpose. TS 7 (the native Go port) is released, but <code>typescript-eslint</code> still caps its peer range at <code>&lt;6.1.0</code> — installing TS 7 today breaks linting. Revisit once typescript-eslint ships support.</p>
+      </div>
+    </details>
+
+    <details class="phase">
+      <summary>Phase 1 · Her GitHub account + repo <span class="tag">Together · 20 min</span></summary>
+      <div class="phase-body">
+        <h3>Create her account</h3>
+        <ol>
+          <li>Go to <span class="ui">github.com/signup</span> (or "Continue with Google"). Follow the prompts.</li>
+          <li>Verify her email — required before she can create a repository.</li>
+        </ol>
+        <h3>Create the repo &amp; push</h3>
+        <ol>
+          <li>On her account: <span class="ui">＋ → New repository</span> → name it (e.g. <code>alysasnell.com</code>) → visibility <b>Public</b> → Create.</li>
+          <li>You push the scaffold from your machine to her repo (you'll have the URL; do it via a remote after she adds you as collaborator, or she creates it and you push once invited).</li>
+        </ol>
+        <h3>Add you as collaborator</h3>
+        <ol>
+          <li>Repo → <span class="ui">Settings</span> → sidebar "Access" → <span class="ui">Collaborators</span> → <span class="ui">Add people</span>.</li>
+          <li>Search <code>mckayqsnell</code> → select → <span class="ui">Add mckayqsnell to [repo]</span>. You accept the email invite.</li>
+        </ol>
+        <h3>Protect main (branch ruleset)</h3>
+        <ol>
+          <li>Repo → <span class="ui">Settings</span> → "Code and automation" → <span class="ui">Rules → Rulesets</span> → <span class="ui">New ruleset → New branch ruleset</span>. Name it "protect-main".</li>
+          <li>Set <span class="ui">Enforcement status: Active</span> (it defaults to Disabled — easy to miss).</li>
+          <li>Under "Target branches" → <span class="ui">Add a target</span> → Default branch.</li>
+          <li>Check <span class="ui">Require a pull request before merging</span> → 1 approval → also check <span class="ui">Require review from Code Owners</span>.</li>
+          <li>Check <span class="ui">Require status checks to pass</span> → add the CI job name(s) by typing them (they appear after the first CI run — come back for this after the first PR if the search is empty).</li>
+          <li><span class="ui">Create</span>.</li>
+        </ol>
+        <p class="note">The scaffold's CODEOWNERS file (<code>.github/CODEOWNERS</code> containing <code>* @mckayqsnell</code>) auto-requests your review on every PR. Works free because the repo is public.</p>
+
+        <h3>Turn on Dependabot — alerts <em>and</em> automatic PRs</h3>
+        <p style="font-size:.9rem;">Nobody is going to remember to check this repo for security patches. Dependabot does it, but only if <b>both</b> of these switches are on — and neither is controlled by a file in the repo. They live in the web UI.</p>
+        <ol>
+          <li>Repo → <span class="ui">Settings</span> → <span class="ui">Advanced Security</span> → <span class="ui">Dependabot alerts</span> → <b>Enable</b>. This is what notices a vulnerable dependency.</li>
+          <li>Same page → <span class="ui">Dependabot security updates</span> → <b>Enable</b>. <b>This is the one that automatically opens a PR with the fix.</b> Without it you get notified about problems and nothing else happens.</li>
+          <li>Same page → <span class="ui">Dependency graph</span> → Enable if it isn't already (on by default for public repos; the other two depend on it).</li>
+          <li>Issues → <span class="ui">Labels</span> → create <code>dependencies</code> and <code>infra</code> so the PRs get labeled.</li>
+        </ol>
+        <p class="note">Routine "there's a newer version" PRs are a separate thing, and those <em>are</em> configured in the repo — <code>.github/dependabot.yml</code>, already written. It batches updates weekly into a handful of grouped PRs (React, build tooling, linting, testing) instead of twenty individual ones, and keeps the GitHub Actions versions fresh monthly. Dependabot PRs land in the same flow as everything else: CI runs, you review, you merge.</p>
+        <p class="flag">GitHub's docs list Dependabot's pnpm support as covering pnpm v7–v10; the scaffold pins pnpm 11. If a Dependabot PR reports that it can't update <code>pnpm-lock.yaml</code>, drop <code>packageManager</code> in <code>package.json</code> to the latest pnpm 10 and regenerate the lockfile. Noted in SETUP-CHECKLIST.md.</p>
+        <p class="src">Sources: <a href="https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-access-to-your-personal-repositories/inviting-collaborators-to-a-personal-repository">collaborators</a> · <a href="https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/creating-rulesets-for-a-repository">rulesets</a> · <a href="https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners">CODEOWNERS</a></p>
+      </div>
+    </details>
+
+    <details class="phase">
+      <summary>Phase 2 · Her Cloudflare: account, you as admin, domain <span class="tag">Together · 25 min</span></summary>
+      <div class="phase-body">
+        <h3>Create her account</h3>
+        <ol>
+          <li>Go to <span class="ui">dash.cloudflare.com/sign-up</span> → email + password → create.</li>
+          <li>Click the verification link Cloudflare emails her (required before inviting members).</li>
+        </ol>
+        <h3>Invite you as Administrator</h3>
+        <ol>
+          <li>Dashboard → <span class="ui">Manage Account → Members</span> → <span class="ui">Invite</span>.</li>
+          <li>Enter <code>mckayqsnell@gmail.com</code> → under Roles pick <span class="ui">Administrator</span> → <span class="ui">Continue to summary → Invite</span>.</li>
+          <li>You accept the email invite; you now manage everything logged in as yourself. (Free accounts support this — RBAC is on all plans. Administrator can't touch her billing or members; that stays hers as Super Administrator.)</li>
+        </ol>
+        <h3>Register alysasnell.com</h3>
+        <ol>
+          <li>Dashboard → <span class="ui">Domain Registration → Register domains</span>.</li>
+          <li>Search <code>alysasnell.com</code> → <span class="ui">Purchase</span> → pick a 1-year term.</li>
+          <li>Enter her contact info + her payment card → accept the agreements → <span class="ui">Complete purchase</span>. (~$10.44/yr at cost; the dashboard shows the exact price. Auto-renew is on by default — leave it on.)</li>
+        </ol>
+        <p class="note">Registrar-purchased domains automatically become a zone on her account with Cloudflare nameservers — no DNS fiddling needed.</p>
+        <p class="src">Sources: <a href="https://developers.cloudflare.com/fundamentals/account/create-account/">create account</a> · <a href="https://developers.cloudflare.com/fundamentals/manage-members/manage/">members</a> · <a href="https://developers.cloudflare.com/fundamentals/manage-members/roles/">roles</a> · <a href="https://developers.cloudflare.com/registrar/get-started/register-domain/">registrar</a></p>
+      </div>
+    </details>
+
+    <details class="phase">
+      <summary>Phase 3 · Cloudflare Pages: deploy + previews + domain <span class="tag">McKay · 15 min</span></summary>
+      <div class="phase-body">
+        <h3>Create the Pages project (logged in as you, on her account)</h3>
+        <ol>
+          <li>Dashboard → <span class="ui">Workers &amp; Pages</span> → <span class="ui">Create application</span> → <span class="ui">Pages</span> tab → <span class="ui">Connect to Git</span>.</li>
+          <li>Sign in with GitHub — <b>use her GitHub</b> here (the repo owner authorizes the "Cloudflare Workers and Pages" GitHub app). Scope it to just this repo → <span class="ui">Install &amp; Authorize</span> → <span class="ui">Begin setup</span>.</li>
+          <li>Project name: <code>alysasnell</code> (becomes alysasnell.pages.dev) · Production branch: <code>main</code>.</li>
+          <li>Framework preset: <span class="ui">React (Vite)</span> → Build command <code>pnpm build</code> · Build output directory <code>dist</code>.</li>
+          <li><span class="ui">Save and Deploy</span>.</li>
+        </ol>
+        <h3>Attach the domain</h3>
+        <ol>
+          <li>The Pages project → <span class="ui">Custom domains</span> tab → <span class="ui">Set up a domain</span> → enter <code>alysasnell.com</code> → <span class="ui">Continue</span>. Cloudflare auto-creates the DNS record since the zone is on the same account. (Always do this via the dashboard — a manual CNAME breaks.)</li>
+        </ol>
+        <p class="note">Previews are automatic: every PR gets a unique preview URL plus a branch URL, and Cloudflare posts a check with the link right on the GitHub PR — that's what you tap from Alysa's text.</p>
+        <p class="flag">The dashboard may visually push "Workers" for new projects; the Pages path above is still current and fully supported for static sites. If the UI has shuffled, look for Pages under Workers &amp; Pages → Create.</p>
+        <p class="src">Sources: <a href="https://developers.cloudflare.com/pages/get-started/git-integration/">git integration</a> · <a href="https://developers.cloudflare.com/pages/configuration/build-configuration/">build config</a> · <a href="https://developers.cloudflare.com/pages/configuration/preview-deployments/">previews</a> · <a href="https://developers.cloudflare.com/pages/configuration/custom-domains/">custom domains</a></p>
+      </div>
+    </details>
+
+    <details class="phase">
+      <summary>Phase 4 · Her Claude setup <span class="tag">Together · 15 min</span></summary>
+      <div class="phase-body">
+        <ol>
+          <li>Subscribe her claude.ai account to <b>Pro ($20/mo)</b>.</li>
+          <li>Install the Claude desktop app for macOS (claude.ai/download) → sign in → click the <span class="ui">Code</span> tab.</li>
+          <li>Above the message box, click the environment selector → <span class="ui">Cloud</span>. First time, it prompts her to connect GitHub — she authorizes the <b>Claude GitHub App</b> on her account (one-time; afterwards cloud sessions can reach any repo her account can see).</li>
+          <li>The default cloud environment (Trusted network access) is fine for this repo; set the setup script to <code>corepack enable && pnpm install</code> if sessions need deps installed. No env vars.</li>
+          <li>Pick her repo + branch below the message box, type/dictate a task, go. When Claude finishes, a <span class="ui">Create PR</span> button appears — CLAUDE.md instructs Claude to walk her through it and hand her the link to text you.</li>
+        </ol>
+        <p class="flag">Voice in the desktop Code tab isn't in the official docs. If there's no mic button in her build, macOS dictation (fn-key or 🎤 on the keyboard) types into the box just fine — same outcome.</p>
+        <p class="src">Sources: <a href="https://code.claude.com/docs/en/desktop-quickstart">desktop quickstart</a> · <a href="https://code.claude.com/docs/en/cloud-environments">cloud environments</a> · <a href="https://code.claude.com/docs/en/claude-code-on-the-web">Claude Code on the web</a></p>
+      </div>
+    </details>
+
+    <details class="phase">
+      <summary>Phase 5 · 1Password (optional) <span class="tag">If she says yes · 10 min</span></summary>
+      <div class="phase-body">
+        <ol>
+          <li>Sign in at <span class="ui">1password.com</span> → sidebar <span class="ui">Invitations</span> → <span class="ui">Invite by Email</span> → her email → <span class="ui">Invite</span>. (Invites expire after 5 days.)</li>
+          <li>She opens the email → join → creates her account password → gets her own Secret Key (have her save the Emergency Kit PDF somewhere real).</li>
+          <li>You confirm her: <span class="ui">Invitations</span> → <span class="ui">Confirm</span> next to her name.</li>
+          <li>Optional shared vault for the website logins: Home → <span class="ui">New Vault</span> ("Alysa's Website") → <span class="ui">Share Vault</span> → add her.</li>
+        </ol>
+        <p class="note">Families is $5.99/mo billed annually = $71.88/yr for 5 members — you + wife leaves 3 free seats, so she costs nothing extra. Her half if she wants to chip in: ~$36/yr. If she passes, keep an "Alysa" vault in your own account with her logins + 2FA recovery codes as lockout insurance for her — you never need them yourself.</p>
+        <p class="src">Sources: <a href="https://1password.com/pricing/password-manager">pricing</a> · <a href="https://support.1password.com/add-remove-family-members/">invite members</a> · <a href="https://support.1password.com/create-share-vaults/">shared vaults</a></p>
+      </div>
+    </details>
+
+    <details class="phase">
+      <summary>Phase 6 · Designs, v1, dry run <span class="tag">Ongoing</span></summary>
+      <div class="phase-body">
+        <ol>
+          <li>She collects inspo screenshots + Figma/Canva mockups → they land in <code>docs/design/</code>.</li>
+          <li>You build v1 locally with Playwright-MCP self-checking, PR it, merge, site goes live.</li>
+          <li>Dry run: she asks Claude for one tiny change end-to-end while you watch. That's the real onboarding.</li>
+        </ol>
+      </div>
+    </details>
+  </section>
+
+  <section>
+    <h2>What it costs</h2>
+    <div class="cost">
+      <div><b>~$10.44/yr</b><span>domain, at cost (her card, her Cloudflare)</span></div>
+      <div><b>$20/mo</b><span>her Claude Pro plan</span></div>
+      <div><b>$0</b><span>hosting, previews, CI, guardrails (free tiers, public repo)</span></div>
+      <div><b>$0–36/yr</b><span>her optional 1Password Families share</span></div>
+      <div><b>~2 min</b><span>your time per change</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Sources</h2>
+    <p class="sources">
+      Every step in the setup guide above links its own official source inline (GitHub docs, Cloudflare developer docs, 1Password support, Claude Code docs), all fetched and verified 2026-08-20. Two honest flags: Cloudflare's dashboard may reorder the Workers/Pages create flow, and voice input in the desktop Code tab is undocumented — both are marked in amber where they appear. Additional background:
+      <a href="https://code.claude.com/docs/en/claude-code-on-the-web">Claude Code on the web / cloud sessions</a> (Pro-plan availability, GitHub app connection, PR creation) ·
+      <a href="https://code.claude.com/docs/en/desktop">Claude Code desktop app</a> (Code tab, Local vs Cloud picker, voice input) ·
+      <a href="https://developers.cloudflare.com/pages/configuration/preview-deployments/">Cloudflare Pages preview deployments</a> (automatic per-PR preview URLs) ·
+      <a href="https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches">GitHub branch protection</a> and <a href="https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners">CODEOWNERS</a> (required reviews).
+      Your screenshots confirmed the desktop app's cloud-environment dialog and environment picker.
+    </p>
+  </section>
+</main>

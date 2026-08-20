@@ -1,0 +1,148 @@
+/* ==========================================================================
+   theme.css — THE design system for alysasnell.com
+   ==========================================================================
+
+   This is the ONE file that controls every color, font, and spacing rhythm on
+   the site. Change a value here and it changes everywhere — buttons, links,
+   backgrounds, cards, headings, all of it.
+
+   >> If you want the site to look different, change it HERE, not in a
+   >> component. Never hardcode a hex color in a .tsx file.
+
+   How it works (Tailwind v4, CSS-first — there is no tailwind.config.js):
+
+     1. `:root` defines the light-mode palette as CSS custom properties.
+     2. `html[data-theme="dark"]` redefines the same properties for dark mode.
+     3. `@theme inline` maps those properties onto Tailwind utility classes,
+        so `bg-as-bg`, `text-as-accent`, `border-as-rule` etc. all resolve to
+        var() and re-theme instantly when [data-theme] flips.
+
+   The human-readable version of this palette — swatches, type scale, component
+   examples — lives at docs/design-system.html. Open that file in a browser.
+   THE TWO FILES MUST STAY IN SYNC: if you change a color here, update the
+   matching swatch there in the same pull request.
+
+   Naming convention: every token is prefixed `--as-` (Alysa Snell).
+   -------------------------------------------------------------------------- */
+
+/* `dark:` utilities follow the data-theme attribute, which index.html sets
+   before first paint so there's no flash of the wrong theme. */
+@custom-variant dark (&:where(html[data-theme="dark"], html[data-theme="dark"] *));
+
+/* --------------------------------------------------------------------------
+   LIGHT PALETTE  (the default)
+   -------------------------------------------------------------------------- */
+:root {
+  /* --- Surfaces: page background and the cards that sit on it --- */
+  --as-bg: #fbf9f6; /* page background — warm paper, not stark white */
+  --as-bg-soft: #ffffff; /* raised surfaces, cards */
+  --as-bg-deep: #f2ede6; /* recessed bands, alternating sections */
+
+  /* --- Text: one ink color at four strengths --- */
+  --as-ink: #23201d; /* headings and body copy */
+  --as-ink-dim: rgba(35, 32, 29, 0.68); /* secondary copy, descriptions */
+  --as-ink-mute: rgba(35, 32, 29, 0.46); /* captions, metadata, dates */
+  --as-ink-faint: rgba(35, 32, 29, 0.24); /* decorative, disabled */
+
+  /* --- Lines: borders and dividers --- */
+  --as-rule: rgba(35, 32, 29, 0.12);
+  --as-rule-strong: rgba(35, 32, 29, 0.24);
+
+  /* --- Accent: the primary brand color. Buttons, links, active states. --- */
+  --as-accent: #1f6f63; /* deep eucalyptus — calm, credible */
+  --as-accent-deep: #17564c; /* hover / pressed */
+  --as-accent-soft: rgba(31, 111, 99, 0.1); /* tinted backgrounds, chips */
+  --as-accent-ring: rgba(31, 111, 99, 0.34); /* focus rings */
+  --as-on-accent: #fbf9f6; /* text ON an accent-filled button */
+
+  /* --- Highlight: the secondary accent. Stat numbers, emphasis, badges. --- */
+  --as-highlight: #c2703f; /* warm clay */
+  --as-highlight-soft: rgba(194, 112, 63, 0.12);
+
+  /* --- Cards --- */
+  --as-card: #ffffff;
+  --as-card-edge: rgba(35, 32, 29, 0.1);
+  --as-card-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 8px 24px rgba(80, 60, 40, 0.06);
+  --as-card-shadow-hover: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 18px 38px rgba(80, 60, 40, 0.12);
+
+  /* --- Ambient background wash behind the hero --- */
+  --as-ambient:
+    radial-gradient(900px 620px at 82% 6%, rgba(31, 111, 99, 0.08), transparent 64%),
+    radial-gradient(680px 480px at 0% 100%, rgba(194, 112, 63, 0.07), transparent 60%);
+
+  color-scheme: light;
+}
+
+/* --------------------------------------------------------------------------
+   DARK PALETTE
+   Same token names, different values. Every token above must have a value
+   here too, or dark mode will silently inherit the light one.
+   -------------------------------------------------------------------------- */
+html[data-theme="dark"] {
+  --as-bg: #16181a;
+  --as-bg-soft: #1e2124;
+  --as-bg-deep: #101214;
+
+  --as-ink: #ece8e2;
+  --as-ink-dim: rgba(236, 232, 226, 0.7);
+  --as-ink-mute: rgba(236, 232, 226, 0.48);
+  --as-ink-faint: rgba(236, 232, 226, 0.24);
+
+  --as-rule: rgba(236, 232, 226, 0.13);
+  --as-rule-strong: rgba(236, 232, 226, 0.26);
+
+  --as-accent: #5fbfae;
+  --as-accent-deep: #7fd4c4;
+  --as-accent-soft: rgba(95, 191, 174, 0.13);
+  --as-accent-ring: rgba(95, 191, 174, 0.4);
+  --as-on-accent: #0f1a18;
+
+  --as-highlight: #e09a63;
+  --as-highlight-soft: rgba(224, 154, 99, 0.14);
+
+  --as-card: #1e2124;
+  --as-card-edge: rgba(236, 232, 226, 0.12);
+  --as-card-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 8px 24px rgba(0, 0, 0, 0.4);
+  --as-card-shadow-hover: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 18px 38px rgba(0, 0, 0, 0.55);
+
+  --as-ambient:
+    radial-gradient(900px 620px at 82% 6%, rgba(95, 191, 174, 0.09), transparent 64%),
+    radial-gradient(680px 480px at 0% 100%, rgba(224, 154, 99, 0.06), transparent 60%);
+
+  color-scheme: dark;
+}
+
+/* --------------------------------------------------------------------------
+   TAILWIND THEME MAPPING
+   `inline` makes the generated utilities emit var(), which is what lets the
+   palette swap at runtime. Adding a token above means adding it here too.
+   -------------------------------------------------------------------------- */
+@theme inline {
+  /* Colors — usable as bg-*, text-*, border-*, ring-*, fill-*, etc. */
+  --color-as-bg: var(--as-bg);
+  --color-as-bg-soft: var(--as-bg-soft);
+  --color-as-bg-deep: var(--as-bg-deep);
+  --color-as-ink: var(--as-ink);
+  --color-as-ink-dim: var(--as-ink-dim);
+  --color-as-ink-mute: var(--as-ink-mute);
+  --color-as-ink-faint: var(--as-ink-faint);
+  --color-as-rule: var(--as-rule);
+  --color-as-rule-strong: var(--as-rule-strong);
+  --color-as-accent: var(--as-accent);
+  --color-as-accent-deep: var(--as-accent-deep);
+  --color-as-accent-soft: var(--as-accent-soft);
+  --color-as-accent-ring: var(--as-accent-ring);
+  --color-as-on-accent: var(--as-on-accent);
+  --color-as-highlight: var(--as-highlight);
+  --color-as-highlight-soft: var(--as-highlight-soft);
+  --color-as-card: var(--as-card);
+  --color-as-card-edge: var(--as-card-edge);
+
+  /* Typography — font-display for headings, font-sans for everything else */
+  --font-display: "Fraunces Variable", Georgia, "Times New Roman", serif;
+  --font-sans: "Inter Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Layout rhythm */
+  --spacing-section: 6rem; /* vertical padding between major sections */
+  --radius-card: 0.875rem;
+}
