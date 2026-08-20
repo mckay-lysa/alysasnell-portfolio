@@ -21,7 +21,7 @@ export const site = {
 
 /** The numbers are the portfolio. Lead with them. */
 export const stats: ReadonlyArray<{ value: string; label: string }> = [
-  { value: "60+", label: "boutique customers onboarded every month" },
+  { value: "60+", label: "boutique customers onboarded monthly" },
   { value: "1,200+", label: "Shopify store owners supported" },
   { value: "90 users", label: "migrated to a new API in under 30 days, zero downtime" },
   { value: "40+", label: "help center articles written and maintained" },
