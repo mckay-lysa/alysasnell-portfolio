@@ -1,7 +1,7 @@
 # CLAUDE.md
 
 Guidance for Claude Code working in this repo. **Alysa Snell's portfolio site —
-a small React 19 + TypeScript single-page site on Cloudflare Pages.**
+a small React 19 + TypeScript single-page site on Cloudflare Workers.**
 Package manager **pnpm** (never npm or yarn).
 
 ---
@@ -78,6 +78,7 @@ break, every other guardrail in this repo stops working.
 | `pnpm-workspace.yaml`                                                          | pnpm overrides + build-script allowlist        |
 | `pnpm-lock.yaml`                                                               | Exact dependency versions (except via install) |
 | `tsconfig*.json`, `eslint.config.js`, `vite.config.ts`, `playwright.config.ts` | Build and check configuration                  |
+| `wrangler.jsonc`                                                               | How the site gets deployed to Cloudflare       |
 | `CLAUDE.md`                                                                    | This file                                      |
 
 **The rule:** do not modify any of these unless **McKay himself**, working
@@ -210,8 +211,9 @@ Delete verification screenshots when you're done; don't commit them.
 ## Orientation
 
 **Stack:** React 19 · TypeScript · Vite · Tailwind v4 (CSS-first) · pnpm · Node 24.
-Hosted on Cloudflare Pages: merging to `main` deploys to alysasnell.com, and
-every PR gets its own preview URL automatically.
+Hosted on Cloudflare Workers (static assets, configured in `wrangler.jsonc`):
+merging to `main` deploys to alysasnell.com, and every PR gets its own preview
+URL automatically.
 
 **Layout:**
 
