@@ -53,6 +53,10 @@ look at when she decides how the site should look.
 > **Order matters:** status check names don't appear in the search box until CI
 > has run at least once. Push the scaffold, open one throwaway PR to make CI
 > run, then come back and add the checks.
+>
+> Done: CI ran green on the scaffold push to `main` and again on this PR, so
+> both check names — `Typecheck · Lint · Test · Build` and
+> `End-to-end (Playwright)` — are now selectable in the ruleset.
 
 ### Dependabot — turn both of these on
 
@@ -69,7 +73,7 @@ not configured by any file in this repo.** Both must be switched on:
 Without the second box, GitHub tells you about vulnerabilities but never fixes
 them, which is the worst of both worlds for a repo nobody checks daily.
 
-- [ ] Create the `infra` and `dependencies` labels (Issues → Labels). Both
+- [x] Create the `infra` and `dependencies` labels (Issues → Labels). Both
       `dependabot.yml` and CLAUDE.md reference them; a label that doesn't exist
       is silently dropped, so infra PRs would arrive unmarked.
 
