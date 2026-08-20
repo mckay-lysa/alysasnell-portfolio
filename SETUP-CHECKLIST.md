@@ -120,8 +120,16 @@ them, which is the worst of both worlds for a repo nobody checks daily.
       `alysasnell.com` (always via the dashboard — a hand-made CNAME breaks)
 - [ ] Open a test PR and confirm Cloudflare posts a **preview URL** on it.
       That link is the whole review workflow — verify it works before Phase 4.
-      If the check is green but there's no link, `preview_urls` is off on the
-      Worker.
+
+> **Observed on PR #5:** the build went green and Cloudflare commented
+> "Deployment successful," but with a _View logs_ link and **no preview URL**.
+> Preview URLs live at `<version>-alysasnell-portfolio.<subdomain>.workers.dev`,
+> and that subdomain only exists after the Worker has had a successful
+> production deploy — which had never happened, since every build until then
+> failed. Expected to resolve once this merges to `main` and the first real
+> `wrangler deploy` runs. **Verify on the next PR before moving to Phase 4.**
+> If it's still missing, check in order: workers.dev subdomain registered on
+> the account, `workers_dev`/`preview_urls` not overridden in the dashboard.
 
 ## ☐ Phase 4 — Alysa's Claude setup
 
