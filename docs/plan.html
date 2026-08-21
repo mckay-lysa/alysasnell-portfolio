@@ -348,6 +348,57 @@
     </details>
 
     <details class="phase">
+      <summary>Phase 1.5 · Move the repo to an org so McKay is an admin <span class="tag">McKay · 20 min</span></summary>
+      <div class="phase-body">
+        <p class="flag"><b>Added 2026-08-20, after the first real pull request.</b> Two things broke that the original plan did not anticipate.</p>
+        <ol>
+          <li><b>Nobody can approve their own pull request.</b> GitHub hardcodes author ≠ approver — no permission level changes it, not admin, not owner. With <code>* @mckayqsnell</code> in CODEOWNERS, McKay's own infra PRs were unmergeable by anyone at all.</li>
+          <li><b>McKay cannot be made an admin of a repo on her personal account.</b> A personal-account repo has exactly two permission levels: <em>owner</em> and <em>collaborator</em>. Roles (Read/Triage/Write/Maintain/Admin) are an <b>organization-only</b> feature. And only Admin can edit rulesets — so every future guardrail change would have to be done by Alysa, clicking through settings she has no way to reason about.</li>
+        </ol>
+        <p>Moving the repo into a <b>free organization</b> fixes both. It also unlocks something a personal repo cannot express: bypass actors there are <em>role-based only</em>, but in an org the bypass list can name <b>one specific user</b>. That is what makes "McKay can merge his own infra PRs, and nobody else can" actually stateable.</p>
+
+        <p class="note"><b>Alysa's total involvement: two clicks.</b> The transfer itself cannot be delegated — it requires administrator access to the repository, which on a personal account only the owner has. After the transfer she never touches a repo setting again.</p>
+
+        <h3>McKay — create the org</h3>
+        <ol>
+          <li>Profile picture → <span class="ui">Settings</span> → sidebar "Access" → <span class="ui">Organizations</span> → <span class="ui">New organization</span> → <span class="ui">Free</span> plan. Free is unlimited for public repos.</li>
+          <li>Invite <code>alysasnell</code> as a <b>Member</b>. Check <span class="ui">Settings → Member privileges</span> allows members to create <b>public</b> repositories — that is the default, and <b>the transfer fails without it</b>.</li>
+        </ol>
+
+        <h3>Alysa — the two clicks</h3>
+        <ol>
+          <li>Accept the org invite from her email.</li>
+          <li>Her repo → <span class="ui">Settings</span> → scroll to <span class="ui">Danger Zone</span> → <span class="ui">Transfer</span> → "Select one of my organizations" → the new org → type the repo name → <span class="ui">I understand, transfer this repository</span>.</li>
+        </ol>
+        <p class="note">Issues, pull requests, stars, watchers, webhooks, secrets, deploy keys, and the full commit history all move. Existing collaborators carry over. Every old URL redirects to the new location.</p>
+
+        <h3>McKay — now an admin, so the rest is all his</h3>
+        <ol>
+          <li><span class="ui">Settings</span> → <span class="ui">Collaborators and teams</span> → confirm <code>alysasnell</code> has <b>Write</b>. She needs to merge her own copy PRs; she does not need Admin.</li>
+          <li><span class="ui">Settings</span> → <span class="ui">Rules</span> → <span class="ui">Rulesets</span> → <code>protect-main</code>:
+            <ul class="plain">
+              <li>Required approvals <b>1 → 0</b> <span>— this is the switch that lets Alysa merge her own copy changes.</span></li>
+              <li><b>Keep</b> <span class="ui">Require review from Code Owners</span> checked <span>— it is now the entire gate.</span></li>
+              <li>Required status checks → add <code>Guardrails (frozen files)</code> <span>— it will not appear in the search box until that job has run at least once.</span></li>
+              <li><span class="ui">Bypass list</span> → <span class="ui">Add bypass</span> → the user <code>@mckayqsnell</code> → <b>Always</b> <span>— "Always", not "For pull requests only"; the latter still blocks direct pushes to main.</span></li>
+            </ul>
+          </li>
+          <li>Verify with <code>gh api repos/&lt;org&gt;/alysasnell-portfolio/rulesets/&lt;id&gt; --jq .current_user_can_bypass</code> — it should no longer say <code>never</code>.</li>
+          <li><code>git remote set-url origin &lt;new-url&gt;</code> in every local clone.</li>
+        </ol>
+
+        <h3>McKay — reconnect the two GitHub Apps</h3>
+        <p>The repo moved, so app installations scoped to Alysa's personal account no longer cover it.</p>
+        <ol>
+          <li>Install the <b>Cloudflare Workers and Pages</b> GitHub App on the org, then Worker → <span class="ui">Settings</span> → <span class="ui">Build</span> → re-point the Git connection at the new repo location.</li>
+          <li>Reauthorize the <b>Claude GitHub App</b> for the new location, so Alysa's cloud sessions can still open pull requests.</li>
+        </ol>
+        <p class="flag"><b>Watch the first PR after the move closely.</b> The Cloudflare connection is the piece most likely to come back wrong, and a broken build there is exactly the failure that already cost a round of debugging once.</p>
+        <p class="src">Sources: <a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/transferring-a-repository">transferring a repository</a> · <a href="https://docs.github.com/en/organizations/collaborating-with-groups-in-organizations/creating-a-new-organization-from-scratch">creating an organization</a> · <a href="https://docs.github.com/en/organizations/managing-user-access-to-your-organizations-repositories/managing-repository-roles/repository-roles-for-an-organization">org repository roles</a> · <a href="https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-personal-account-settings/permission-levels-for-a-personal-account-repository">personal-repo permission levels</a></p>
+      </div>
+    </details>
+
+    <details class="phase">
       <summary>Phase 2 · Her Cloudflare: account, you as admin, domain <span class="tag">Together · 25 min</span></summary>
       <div class="phase-body">
         <h3>Create her account</h3>
