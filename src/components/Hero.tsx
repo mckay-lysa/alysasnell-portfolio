@@ -2,7 +2,7 @@ import { site, stats } from "../content/site";
 
 export default function Hero() {
   return (
-    <header className="mx-auto max-w-3xl px-6 pt-24 pb-16 sm:pt-32">
+    <header className="mx-auto max-w-3xl px-6 pt-28 pb-16 sm:pt-36">
       <p className="text-xs font-semibold tracking-[0.14em] text-as-accent uppercase">{site.role}</p>
 
       <h1 className="mt-4 text-4xl leading-[1.08] font-semibold text-as-ink sm:text-6xl">{site.name}</h1>
