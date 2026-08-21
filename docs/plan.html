@@ -209,7 +209,7 @@
       </div>
       <div class="loop-row">
         <div class="step her"><span class="who">Alysa</span><b>4 · Texts you the PR link</b><span>Claude's last step is always: "send this link to McKay." She can view the preview herself too.</span></div>
-        <div class="step you"><span class="who">McKay</span><b>5 · Two-minute review</b><span>Tap link → look at preview → skim diff → merge. GitHub also pings you as required reviewer.</span></div>
+        <div class="step you"><span class="who">McKay</span><b>5 · Two-minute review</b><span>Only for infra PRs: tap link → skim diff → approve. Copy and design changes never reach you — Alysa merges those herself after checking the preview.</span></div>
         <div class="step bot"><span class="who">Robots</span><b>6 · Live</b><span>Merge to main auto-deploys to alysasnell.com. Done.</span></div>
       </div>
       <p class="loop-note">If a check fails, CLAUDE.md tells Claude to fix it <em>before</em> asking her to text you — red PRs never reach your phone.</p>
@@ -252,7 +252,7 @@
 ├── .github/
 │   ├── workflows/ci.yml       <span class="c">← format · lint · types · test · build · e2e</span> <span class="f">frozen</span>
 │   ├── dependabot.yml         <span class="c">← grouped weekly dependency PRs</span> <span class="f">frozen</span>
-│   ├── CODEOWNERS             <span class="c">← McKay = required reviewer</span> <span class="f">frozen</span>
+│   ├── CODEOWNERS             <span class="c">← frozen paths = McKay approves</span> <span class="f">frozen</span>
 │   └── pull_request_template.md
 ├── docs/
 │   ├── plan.html              <span class="c">← this file</span>
@@ -326,11 +326,12 @@
           <li>Repo → <span class="ui">Settings</span> → "Code and automation" → <span class="ui">Rules → Rulesets</span> → <span class="ui">New ruleset → New branch ruleset</span>. Name it "protect-main".</li>
           <li>Set <span class="ui">Enforcement status: Active</span> (it defaults to Disabled — easy to miss).</li>
           <li>Under "Target branches" → <span class="ui">Add a target</span> → Default branch.</li>
-          <li>Check <span class="ui">Require a pull request before merging</span> → 1 approval → also check <span class="ui">Require review from Code Owners</span>.</li>
+          <li>Check <span class="ui">Require a pull request before merging</span> → <b>0 approvals</b> → also check <span class="ui">Require review from Code Owners</span>.</li>
           <li>Check <span class="ui">Require status checks to pass</span> → add the CI job name(s) by typing them (they appear after the first CI run — come back for this after the first PR if the search is empty).</li>
           <li><span class="ui">Create</span>.</li>
         </ol>
-        <p class="note">The scaffold's CODEOWNERS file (<code>.github/CODEOWNERS</code> containing <code>* @mckayqsnell</code>) auto-requests your review on every PR. Works free because the repo is public.</p>
+        <p class="flag"><b>Revised 2026-08-20 — this originally said "1 approval," and CODEOWNERS originally contained <code>* @mckayqsnell</code>.</b> That combination put McKay on <em>every</em> pull request, including one-line copy tweaks, and made his own infra PRs unmergeable — GitHub does not let anyone approve their own pull request, at any permission level. CODEOWNERS now lists only the frozen paths, and required approvals drops to 0, so <b>code-owner review is the entire gate</b>: it fires only on PRs that actually touch a frozen file. Alysa merges her own copy changes; McKay is pulled in for infra. See Phase 1.5 in <code>SETUP-CHECKLIST.md</code> for the org move that makes him an admin.</p>
+        <p class="note">Because the gate keys off <em>paths</em> rather than the <code>infra</code> label, it cannot be dodged by forgetting to label a PR. The label still exists for triage, and the <code>Guardrails (frozen files)</code> CI job fails any PR that touches a frozen file without it. Works free because the repo is public.</p>
 
         <h3>Turn on Dependabot — alerts <em>and</em> automatic PRs</h3>
         <p style="font-size:.9rem;">Nobody is going to remember to check this repo for security patches. Dependabot does it, but only if <b>both</b> of these switches are on — and neither is controlled by a file in the repo. They live in the web UI.</p>

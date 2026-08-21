@@ -33,14 +33,26 @@ This shapes everything below. Read it before you do anything else.
 
 ### Ending every session
 
-Your last step is always the same. After the pull request is open and CI is
-green, say something like:
+Your last step is always the same: hand her a link. What you say about it
+depends on whether the PR touched a frozen file (see below).
 
-> **Done — here's the link: `<PR URL>`. Text that to McKay and he'll take a look.
-> You can also click the Cloudflare preview link in the PR to see the change
-> live before it goes to the real site.**
+**Almost always — copy, design, images, page order.** Nothing frozen was
+touched, so GitHub will let her merge it herself once the checks are green:
 
-Do not skip this. Do not end a session without handing her a link.
+> **Done — here's the link: `<PR URL>`. Click the Cloudflare preview link in
+> there to see the change live first. If it looks right, hit "Merge pull
+> request" and it'll be on the real site in a couple of minutes.**
+
+**Occasionally — a frozen file changed**, which only happens when McKay
+authorized it. GitHub will block the merge until he approves:
+
+> **Done — here's the link: `<PR URL>`. This one changed something in how the
+> site is built, so text it to McKay — GitHub won't let it merge until he's
+> looked at it.**
+
+Do not skip this. Do not end a session without handing her a link. If you are
+unsure which case you're in, look at whether the `Guardrails (frozen files)`
+check reported any frozen files — don't guess.
 
 **If a check is red, fix it first.** Never hand her a link to a failing PR — a
 red PR reaching McKay's phone means something went wrong here. Read the failure,
@@ -69,10 +81,22 @@ fix it, push, wait for green. Only then give her the link.
 These files are what stop a bad change from reaching the live site. If they
 break, every other guardrail in this repo stops working.
 
+**This list is enforced, not advisory.** The paths live in
+[`.github/CODEOWNERS`](.github/CODEOWNERS), which is the single source of truth
+for the table below. Because "Require review from Code Owners" only fires on
+pull requests that actually change a matching file, a PR touching any of these
+blocks until McKay approves, and a PR touching none of them needs no approval at
+all. The `Guardrails (frozen files)` CI job reads the same list to check the
+`infra` label and to reject PRs that mix frozen files with site changes.
+
+The gate keys off **paths, not the label** — a label can be forgotten or
+removed; editing `wrangler.jsonc` always trips it. If you add a path here, add
+it to `.github/CODEOWNERS` in the same PR or the table is a lie.
+
 | Frozen                                                                         | What it is                                     |
 | ------------------------------------------------------------------------------ | ---------------------------------------------- |
 | `.github/workflows/`                                                           | CI — the checks that gate every merge          |
-| `.github/CODEOWNERS`                                                           | Makes McKay the required reviewer              |
+| `.github/CODEOWNERS`                                                           | The frozen list itself — what needs approval   |
 | `.github/dependabot.yml`                                                       | Automatic dependency and security updates      |
 | `package.json` dependencies                                                    | What the site is built out of                  |
 | `pnpm-workspace.yaml`                                                          | pnpm overrides + build-script allowlist        |
@@ -91,6 +115,10 @@ stop.
 If McKay does authorize it: put the change in its own PR, label it `infra`, and
 open the description with a bolded line saying exactly what frozen file changed
 and why. Never bundle an infra change with a content or design change.
+
+The last two are enforced by the `Guardrails (frozen files)` job, so getting
+them wrong means a red check, not a quiet mistake. Updating `docs/` alongside an
+infra change is fine and expected — docs don't count as a site change.
 
 **CI in particular:** never "fix" a failing build by weakening the check. If
 lint fails, fix the code, not the lint rule. If a test fails, fix the code, not
