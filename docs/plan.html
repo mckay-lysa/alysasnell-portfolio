@@ -222,7 +222,7 @@
       <div class="dcard"><p class="eyebrow">Accounts</p><b>Her GitHub + her Cloudflare</b><span>You're a collaborator on GitHub and an Administrator member on her Cloudflare — you always log in as yourself, so you never need her credentials for anything day-to-day, and her password changes can't lock you out.</span></div>
       <div class="dcard"><p class="eyebrow">Passwords</p><b>Offer her a spot on your 1Password Families</b><span>Families is $5.99/mo billed annually ($71.88/yr) and includes 5 members — you + wife leaves 3 free seats, so adding her costs $0 extra (her "split" would be ~$36/yr if you want). Then her own 1PW account stores her creds + 2FA recovery codes and no backup vault of yours is needed. If she declines: keep an "Alysa" vault in your account as break-glass insurance for <em>her</em> lockouts (recovery codes especially) — optional, your call.</span></div>
       <div class="dcard"><p class="eyebrow">Repo visibility</p><b>Public repo</b><span>Verified: on a free GitHub account, branch protection, rulesets, and CODEOWNERS enforcement only work on <em>public</em> repos (private needs Pro, $4/mo). A portfolio site's code is fine public — and it becomes a portfolio piece for both of you. All guardrails then work free.</span></div>
-      <div class="dcard"><p class="eyebrow">Domain</p><b>alysasnell.com</b><span>Registered on her Cloudflare account (~$10/yr). Site hosted on Cloudflare Pages there too — free tier, unlimited bandwidth, automatic PR previews.</span></div>
+      <div class="dcard"><p class="eyebrow">Domain</p><b>alysasnell.com</b><span>Registered on her Cloudflare account (~$10/yr). Site hosted on Cloudflare Workers there too — free tier, unlimited bandwidth, automatic PR previews.</span></div>
       <div class="dcard"><p class="eyebrow">Her setup</p><b>Cloud Claude Code, $20 Pro plan</b><span>Desktop app → Code tab → Cloud environment. Confirmed: works on Pro, connects via the GitHub app during onboarding, and opens PRs directly. Nothing installed on her Mac except the Claude app. (Voice in the Code tab isn't officially documented — if it's not there, macOS dictation covers it.)</span></div>
       <div class="dcard"><p class="eyebrow">Your setup</p><b>Local CLI with full toolchain</b><span>You keep a clone with Playwright MCP for the v1 build-out and heavy redesigns. Claude self-checks visually in a real browser before pushing.</span></div>
       <div class="dcard"><p class="eyebrow">Stack</p><b>React + Vite + TypeScript + Tailwind + pnpm</b><span>Your muscle memory, Claude's strongest stack. TypeScript is a free adversarial reviewer — broken code fails CI before it reaches you.</span></div>
@@ -372,23 +372,28 @@
     </details>
 
     <details class="phase">
-      <summary>Phase 3 · Cloudflare Pages: deploy + previews + domain <span class="tag">McKay · 15 min</span></summary>
+      <summary>Phase 3 · Cloudflare Workers: deploy + previews + domain <span class="tag">McKay · 15 min</span></summary>
       <div class="phase-body">
-        <h3>Create the Pages project (logged in as you, on her account)</h3>
+        <p class="flag"><b>Revised 2026-08-20 — this phase originally said Pages.</b> The dashboard's import flow now creates a <b>Worker</b> (Workers Builds), and that's what got set up: <code>alysasnell-portfolio</code>. Pages is in maintenance mode, so Workers is the right place to be. The one real difference: <b>Pages reads the build output directory from the dashboard; Workers reads it from <code>wrangler.jsonc</code> in the repo.</b> That file was missing at first, and the first PR build died on <em>"Missing entry-point to Worker script or to assets directory."</em> It's committed now.</p>
+        <h3>Create the Worker (logged in as you, on her account)</h3>
         <ol>
-          <li>Dashboard → <span class="ui">Workers &amp; Pages</span> → <span class="ui">Create application</span> → <span class="ui">Pages</span> tab → <span class="ui">Connect to Git</span>.</li>
-          <li>Sign in with GitHub — <b>use her GitHub</b> here (the repo owner authorizes the "Cloudflare Workers and Pages" GitHub app). Scope it to just this repo → <span class="ui">Install &amp; Authorize</span> → <span class="ui">Begin setup</span>.</li>
-          <li>Project name: <code>alysasnell</code> (becomes alysasnell.pages.dev) · Production branch: <code>main</code>.</li>
-          <li>Framework preset: <span class="ui">React (Vite)</span> → Build command <code>pnpm build</code> · Build output directory <code>dist</code>.</li>
-          <li><span class="ui">Save and Deploy</span>.</li>
+          <li>Dashboard → <span class="ui">Workers &amp; Pages</span> → <span class="ui">Create application</span> → <span class="ui">Import a repository</span>.</li>
+          <li>Sign in with GitHub — <b>use her GitHub</b> here (the repo owner authorizes the "Cloudflare Workers and Pages" GitHub app). Scope it to just this repo → <span class="ui">Install &amp; Authorize</span>.</li>
+          <li>Worker name: <code>alysasnell-portfolio</code> · Production branch: <code>main</code>. The name must match <code>name</code> in <code>wrangler.jsonc</code>, or a deploy silently creates a second, empty Worker.</li>
+          <li>Build command <code>pnpm build</code>. There is no "output directory" field — <code>assets.directory</code> in <code>wrangler.jsonc</code> is what points at <code>./dist</code>.</li>
+        </ol>
+        <h3>Make the deploy commands use pnpm</h3>
+        <p>Cloudflare defaults these to <code>npx</code>, which pulls whatever wrangler is newest at build time. <code>wrangler</code> is a devDependency locked in <code>pnpm-lock.yaml</code>, so point the commands at it instead — Worker → <span class="ui">Settings</span> → <span class="ui">Build</span>:</p>
+        <ol>
+          <li>Deploy command: <code>pnpm run deploy</code> (not <code>npx wrangler deploy</code>).</li>
+          <li>Non-production branch deploy command: <code>pnpm run deploy:preview</code> (not <code>npx wrangler versions upload</code>). This is the one that builds PR previews.</li>
         </ol>
         <h3>Attach the domain</h3>
         <ol>
-          <li>The Pages project → <span class="ui">Custom domains</span> tab → <span class="ui">Set up a domain</span> → enter <code>alysasnell.com</code> → <span class="ui">Continue</span>. Cloudflare auto-creates the DNS record since the zone is on the same account. (Always do this via the dashboard — a manual CNAME breaks.)</li>
+          <li>The Worker → <span class="ui">Settings</span> → <span class="ui">Domains &amp; Routes</span> → <span class="ui">Add</span> → <span class="ui">Custom domain</span> → enter <code>alysasnell.com</code>. Cloudflare auto-creates the DNS record since the zone is on the same account. (Always do this via the dashboard — a manual CNAME breaks.)</li>
         </ol>
-        <p class="note">Previews are automatic: every PR gets a unique preview URL plus a branch URL, and Cloudflare posts a check with the link right on the GitHub PR — that's what you tap from Alysa's text.</p>
-        <p class="flag">The dashboard may visually push "Workers" for new projects; the Pages path above is still current and fully supported for static sites. If the UI has shuffled, look for Pages under Workers &amp; Pages → Create.</p>
-        <p class="src">Sources: <a href="https://developers.cloudflare.com/pages/get-started/git-integration/">git integration</a> · <a href="https://developers.cloudflare.com/pages/configuration/build-configuration/">build config</a> · <a href="https://developers.cloudflare.com/pages/configuration/preview-deployments/">previews</a> · <a href="https://developers.cloudflare.com/pages/configuration/custom-domains/">custom domains</a></p>
+        <p class="note">Previews come from <code>preview_urls: true</code> in <code>wrangler.jsonc</code>: every PR gets a unique version preview URL, and Cloudflare posts a check with the link right on the GitHub PR — that's what you tap from Alysa's text. A green check with <em>no</em> link means that setting got turned off.</p>
+        <p class="src">Sources: <a href="https://developers.cloudflare.com/workers/ci-cd/builds/configuration/">Workers Builds config</a> · <a href="https://developers.cloudflare.com/workers/static-assets/">static assets</a> · <a href="https://developers.cloudflare.com/workers/configuration/previews/">preview URLs</a> · <a href="https://developers.cloudflare.com/workers/static-assets/migration-guides/migrate-from-pages/">migrating from Pages</a></p>
       </div>
     </details>
 
@@ -447,10 +452,10 @@
   <section>
     <h2>Sources</h2>
     <p class="sources">
-      Every step in the setup guide above links its own official source inline (GitHub docs, Cloudflare developer docs, 1Password support, Claude Code docs), all fetched and verified 2026-08-20. Two honest flags: Cloudflare's dashboard may reorder the Workers/Pages create flow, and voice input in the desktop Code tab is undocumented — both are marked in amber where they appear. Additional background:
+      Every step in the setup guide above links its own official source inline (GitHub docs, Cloudflare developer docs, 1Password support, Claude Code docs), all fetched and verified 2026-08-20. Two honest flags: Phase 3 originally described Cloudflare Pages and has been revised — the dashboard now creates a Worker instead, and Pages is in maintenance mode — and voice input in the desktop Code tab is undocumented. Both are marked in amber where they appear. Additional background:
       <a href="https://code.claude.com/docs/en/claude-code-on-the-web">Claude Code on the web / cloud sessions</a> (Pro-plan availability, GitHub app connection, PR creation) ·
       <a href="https://code.claude.com/docs/en/desktop">Claude Code desktop app</a> (Code tab, Local vs Cloud picker, voice input) ·
-      <a href="https://developers.cloudflare.com/pages/configuration/preview-deployments/">Cloudflare Pages preview deployments</a> (automatic per-PR preview URLs) ·
+      <a href="https://developers.cloudflare.com/workers/configuration/previews/">Cloudflare Workers preview URLs</a> (automatic per-PR preview URLs) ·
       <a href="https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches">GitHub branch protection</a> and <a href="https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners">CODEOWNERS</a> (required reviews).
       Your screenshots confirmed the desktop app's cloud-environment dialog and environment picker.
     </p>

@@ -1,0 +1,49 @@
+// Cloudflare Workers config — static Vite site, no server-side code.
+//
+// This project is a Worker (Workers Builds), not a Pages project. Pages reads
+// its output directory from the dashboard; Workers reads it from this file.
+// Without this file, `wrangler versions upload` fails with "Missing entry-point
+// to Worker script or to assets directory" — which is exactly what happened.
+//
+// ⚠️  DO NOT EDIT without McKay explicitly asking for it.
+//     See CLAUDE.md → "Frozen files".
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+
+  // Must match the existing Worker in the dashboard. Renaming this creates a
+  // second, empty Worker and leaves the real one stale.
+  "name": "alysasnell-portfolio",
+  "compatibility_date": "2026-08-20",
+
+  // No "main" and no assets "binding": this Worker serves static files only.
+  // Cloudflare's docs are explicit that the ASSETS binding is only for projects
+  // that also have a Worker script.
+
+  // Explicit rather than defaulted, so a deploy can't silently flip them:
+  // workers.dev keeps a URL alive alongside the custom domain, and preview_urls
+  // is what puts a clickable per-PR preview link on the pull request. That link
+  // is the entire review workflow for Alysa — without it she has nothing to look
+  // at before merging.
+  "workers_dev": true,
+  "preview_urls": true,
+
+  // Workers Logs. Kept here as well as the dashboard, because the next
+  // `wrangler deploy` resets whatever the dashboard says to match this file.
+  // Free tier: 200k events/day, 3-day retention.
+  "observability": {
+    "logs": {
+      "enabled": true,
+      "invocation_logs": true,
+    },
+  },
+
+  "assets": {
+    // Vite's build output.
+    "directory": "./dist",
+    // The site is one page with no client-side router, so this isn't about
+    // routing — it means a mistyped or stale URL still lands on her portfolio
+    // instead of a bare Cloudflare 404. Trade-off: unmatched paths return
+    // HTTP 200. Acceptable for a one-page site; revisit if real routes appear.
+    "not_found_handling": "single-page-application",
+  },
+}

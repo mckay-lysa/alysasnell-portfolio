@@ -88,20 +88,48 @@ them, which is the worst of both worlds for a repo nobody checks daily.
 - [ ] Register **alysasnell.com** (Domain Registration → Register domains, ~$10.44/yr,
       her card, auto-renew on)
 
-## ☐ Phase 3 — Cloudflare Pages
+## ☐ Phase 3 — Cloudflare Workers
 
-- [ ] Workers & Pages → Create application → Pages → Connect to Git
-      (authorize with **her** GitHub, scoped to just this repo)
-- [ ] Project name `alysasnell`, production branch `main`
-- [ ] Build command `pnpm build`, output directory `dist`
-- [ ] Set the **`NODE_VERSION`** environment variable to `24` if the build picks
-      a different one — `.node-version` is in the repo and should be respected,
-      but confirm in the first build log
-- [ ] Save and Deploy; confirm `alysasnell.pages.dev` loads
-- [ ] Custom domains tab → Set up a domain → `alysasnell.com`
-      (always via the dashboard — a hand-made CNAME breaks)
+> **This was originally written for Cloudflare Pages.** The dashboard's "import
+> a repository" flow now creates a **Worker** (Workers Builds) instead, which is
+> what actually got set up — the project is `alysasnell-portfolio`. Pages is in
+> maintenance mode, so staying on Workers is the right call, but it changes one
+> thing: Pages reads the output directory from the dashboard, Workers reads it
+> from **`wrangler.jsonc` in the repo**. That file was missing, which is why the
+> first PR build failed with _"Missing entry-point to Worker script or to assets
+> directory."_ It exists now.
+
+- [x] Workers & Pages → Create application → Connect to Git
+      (authorized with **her** GitHub, scoped to just this repo)
+- [x] Worker name `alysasnell-portfolio`, production branch `main`
+- [x] `wrangler.jsonc` committed — assets dir `./dist`, `preview_urls: true`
+- [ ] **Set both deploy commands to use pnpm, not npx.** Worker → Settings →
+      Build → Deploy command:
+  - Build command: `pnpm build`
+  - Deploy command: `pnpm run deploy` (was `npx wrangler deploy`)
+  - Non-production branch deploy command: `pnpm run deploy:preview`
+    (was `npx wrangler versions upload`)
+
+  > `npx` pulls whatever wrangler is latest at build time. `wrangler` is a
+  > devDependency now, locked in `pnpm-lock.yaml`, so deploys stop floating.
+
+- [ ] Confirm the build picks Node 24 from `.node-version`; if not, set the
+      **`NODE_VERSION`** environment variable to `24`
+- [ ] Confirm `alysasnell-portfolio.<subdomain>.workers.dev` loads
+- [ ] Worker → Settings → Domains & Routes → Add → Custom domain →
+      `alysasnell.com` (always via the dashboard — a hand-made CNAME breaks)
 - [ ] Open a test PR and confirm Cloudflare posts a **preview URL** on it.
       That link is the whole review workflow — verify it works before Phase 4.
+
+> **Observed on PR #5:** the build went green and Cloudflare commented
+> "Deployment successful," but with a _View logs_ link and **no preview URL**.
+> Preview URLs live at `<version>-alysasnell-portfolio.<subdomain>.workers.dev`,
+> and that subdomain only exists after the Worker has had a successful
+> production deploy — which had never happened, since every build until then
+> failed. Expected to resolve once this merges to `main` and the first real
+> `wrangler deploy` runs. **Verify on the next PR before moving to Phase 4.**
+> If it's still missing, check in order: workers.dev subdomain registered on
+> the account, `workers_dev`/`preview_urls` not overridden in the dashboard.
 
 ## ☐ Phase 4 — Alysa's Claude setup
 
