@@ -56,9 +56,22 @@ fix it, push, wait for green. Only then give her the link.
 2. **Make the change.**
 3. **Verify it.** Run every command in [Verification](#verification). All of
    them, every time. Not a subset.
-4. **Open a pull request** with a description Alysa could read and understand.
-   Fill out the PR template honestly — including the "anything McKay should
-   know" section.
+4. **Open a pull request using the template.** The PR body is always
+   [`.github/pull_request_template.md`](.github/pull_request_template.md),
+   filled in. `gh pr create --body "..."` does **not** pick the template up on
+   its own — you have to pass it:
+
+   ```bash
+   cp .github/pull_request_template.md /tmp/pr-body.md
+   # edit /tmp/pr-body.md: replace every <!-- comment --> with a real answer
+   gh pr create --title "..." --body-file /tmp/pr-body.md
+   ```
+
+   Keep all three headings. Replace the comments — never leave them in, and
+   never delete a section because you have nothing to say. "Nothing" is a
+   valid answer to _Anything McKay should know_; silence is not. Write it so
+   Alysa could read it: plain sentences, no jargon, no file paths.
+
 5. **Wait for CI to go green.** Fix anything red.
 6. **Hand Alysa the link** (see above).
 
