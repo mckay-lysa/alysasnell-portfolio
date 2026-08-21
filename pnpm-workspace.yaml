@@ -15,6 +15,10 @@ allowBuilds:
   # through optionalDependencies. (Vite 8 uses Rolldown, so this is only for
   # any transitive esbuild that sneaks in.)
   esbuild: false
+  # workerd is wrangler's local runtime, only used by `wrangler dev`. Dev here
+  # is Vite, and deploying static assets never invokes it, so its postinstall
+  # is not needed.
+  workerd: false
 # McKay's global pnpm config sets a `minimumReleaseAge` — packages published
 # more recently than that threshold are held back, so a compromised release
 # can't be installed the hour it lands. These three were newer than the
