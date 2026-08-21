@@ -1,20 +1,17 @@
-## What changed
+## What
 
-<!-- One or two plain-English sentences. What does the site look like now that
-     it didn't before? Written so McKay can understand it in ten seconds. -->
+<!-- One plain sentence. What's different on the site now? -->
 
-## Where to look
+## Why
 
-<!-- Which section of the page? Hero, Experience, Selected work, Contact? -->
-
-## Checks
-
-- [ ] `pnpm lint`, `pnpm typecheck`, `pnpm test`, and `pnpm build` all pass
-- [ ] Looked at it in a browser at phone width and desktop width
-- [ ] No new dependencies added (or: called out below and explained why)
-- [ ] No changes to CI, config, or CLAUDE.md (or: labeled `infra` and flagged below)
+<!-- One plain sentence. What was Alysa trying to get? -->
 
 ## Anything McKay should know
 
-<!-- Say "nothing" if there's nothing. If a check failed, or you had to touch a
-     frozen file, or you weren't sure about something — say so here, loudly. -->
+<!-- "Nothing" is a fine answer. Say so loudly if a check failed, a frozen file
+     changed, or a dependency was added. -->
+
+---
+
+- [ ] Every check in CLAUDE.md passes
+- [ ] Looked at it in a browser at phone width and desktop width
