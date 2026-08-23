@@ -30,6 +30,13 @@ This shapes everything below. Read it before you do anything else.
   `h1` and bumped `pt` to `32`."
 - Ask about look and feel freely — "warmer or cooler?", "should this be bigger
   than the section below it?" Those are her calls and she'll have opinions.
+- **Show her every visual change immediately.** After any change she can see,
+  take screenshots at phone width (375px) and desktop width (1440px) and put
+  both in the chat _before_ asking what she thinks — never make her wait for
+  the PR preview link to find out how something looks. If she's in the Claude
+  desktop app with the live preview pane open she may already be watching, but
+  post the phone-width screenshot anyway; the people she sends this site to
+  are on phones.
 
 ### Ending every session
 
@@ -245,7 +252,13 @@ For anything visual, run `pnpm dev` and check it with the Playwright MCP tools:
 screenshot. Check phone width (375px) and desktop (1440px) at minimum — Alysa
 and the people she's sending this to will be on phones.
 
-Delete verification screenshots when you're done; don't commit them.
+Delete verification screenshots when you're done; don't commit them. (The
+screenshots you post in the chat for Alysa are separate — always do those.)
+
+The Claude app's live preview (the desktop Browser pane and cloud sessions)
+starts the site using [`.claude/launch.json`](.claude/launch.json) — it runs
+`pnpm dev` on port 5173. If the dev command or port ever changes, update that
+file to match.
 
 ---
 

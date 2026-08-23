@@ -25,8 +25,10 @@ blob-report
 *.suo
 *.sw?
 
-# Claude Code local state
-.claude/
+# Claude Code local state (launch.json is shared: it tells the Claude app's
+# preview how to start the dev server)
+.claude/*
+!.claude/launch.json
 
 # Secrets
 .env
