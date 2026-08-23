@@ -1,0 +1,13 @@
+{
+  // Tells the Claude app's preview (Browser pane / cloud sessions) how to
+  // start the site. Vite serves on 5173.
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "alysasnell.com",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["dev"],
+      "port": 5173
+    }
+  ]
+}
