@@ -9,6 +9,10 @@
    >> If you want the site to look different, change it HERE, not in a
    >> component. Never hardcode a hex color in a .tsx file.
 
+   The palette is earthy and muted on purpose: warm cream and beige paper,
+   soft sage, walnut brown, and a deep espresso band that the page drops into
+   for emphasis. Nothing is saturated. Nothing shouts.
+
    How it works (Tailwind v4, CSS-first — there is no tailwind.config.js):
 
      1. `:root` defines the light-mode palette as CSS custom properties.
@@ -33,42 +37,55 @@
    LIGHT PALETTE  (the default)
    -------------------------------------------------------------------------- */
 :root {
-  /* --- Surfaces: page background and the cards that sit on it --- */
-  --as-bg: #fbf9f6; /* page background — warm paper, not stark white */
-  --as-bg-soft: #ffffff; /* raised surfaces, cards */
-  --as-bg-deep: #f2ede6; /* recessed bands, alternating sections */
+  /* --- Surfaces: the four grounds a section can sit on --- */
+  --as-bg: #f5f0e6; /* page background — warm cream paper */
+  --as-bg-soft: #fdfaf3; /* raised surfaces, cards */
+  --as-bg-deep: #ebe3d4; /* recessed beige band */
+  --as-bg-sage: #dcddcf; /* muted sage band — the third ground */
 
-  /* --- Text: one ink color at four strengths --- */
-  --as-ink: #23201d; /* headings and body copy */
-  --as-ink-dim: rgba(35, 32, 29, 0.68); /* secondary copy, descriptions */
-  --as-ink-mute: rgba(35, 32, 29, 0.46); /* captions, metadata, dates */
-  --as-ink-faint: rgba(35, 32, 29, 0.24); /* decorative, disabled */
+  /* --- Band: the deep espresso panel the page drops into --- */
+  --as-band: #3a3227;
+  --as-band-ink: #f0e9db;
+  --as-band-ink-dim: rgba(240, 233, 219, 0.7);
+  --as-band-ink-mute: rgba(240, 233, 219, 0.52);
+  --as-band-rule: rgba(240, 233, 219, 0.18);
+  --as-band-highlight: #d9b98c; /* stat numbers on the dark band */
+
+  /* --- Text: one warm brown-black at four strengths --- */
+  --as-ink: #2c2418; /* headings and body copy */
+  --as-ink-dim: rgba(44, 36, 24, 0.72); /* secondary copy, descriptions */
+  --as-ink-mute: rgba(44, 36, 24, 0.64); /* captions, metadata, dates */
+  --as-ink-faint: rgba(44, 36, 24, 0.22); /* decorative, disabled */
 
   /* --- Lines: borders and dividers --- */
-  --as-rule: rgba(35, 32, 29, 0.12);
-  --as-rule-strong: rgba(35, 32, 29, 0.24);
+  --as-rule: rgba(44, 36, 24, 0.13);
+  --as-rule-strong: rgba(44, 36, 24, 0.26);
 
   /* --- Accent: the primary brand color. Buttons, links, active states. --- */
-  --as-accent: #1f6f63; /* deep eucalyptus — calm, credible */
-  --as-accent-deep: #17564c; /* hover / pressed */
-  --as-accent-soft: rgba(31, 111, 99, 0.1); /* tinted backgrounds, chips */
-  --as-accent-ring: rgba(31, 111, 99, 0.34); /* focus rings */
-  --as-on-accent: #fbf9f6; /* text ON an accent-filled button */
+  --as-accent: #5a6a4e; /* muted moss green — quiet, grounded */
+  --as-accent-deep: #46543c; /* hover / pressed */
+  --as-accent-soft: rgba(90, 106, 78, 0.1); /* tinted backgrounds, chips */
+  --as-accent-ring: rgba(90, 106, 78, 0.35); /* focus rings */
+  --as-on-accent: #f5f0e6; /* text ON an accent-filled button */
 
-  /* --- Highlight: the secondary accent. Stat numbers, emphasis, badges. --- */
-  --as-highlight: #c2703f; /* warm clay */
-  --as-highlight-soft: rgba(194, 112, 63, 0.12);
+  /* --- Highlight: the secondary accent. Stat numbers, year markers, badges. --- */
+  --as-highlight: #85623d; /* walnut brown */
+  --as-highlight-soft: rgba(133, 98, 61, 0.12);
 
   /* --- Cards --- */
-  --as-card: #ffffff;
-  --as-card-edge: rgba(35, 32, 29, 0.1);
+  --as-card: #fdfaf3;
+  --as-card-edge: rgba(44, 36, 24, 0.1);
   --as-card-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 8px 24px rgba(80, 60, 40, 0.06);
   --as-card-shadow-hover: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 18px 38px rgba(80, 60, 40, 0.12);
 
+  /* --- Photo placeholders, until the real images land --- */
+  --as-photo: #e2dbca;
+  --as-photo-edge: rgba(44, 36, 24, 0.14);
+
   /* --- Ambient background wash behind the hero --- */
   --as-ambient:
-    radial-gradient(900px 620px at 82% 6%, rgba(31, 111, 99, 0.08), transparent 64%),
-    radial-gradient(680px 480px at 0% 100%, rgba(194, 112, 63, 0.07), transparent 60%);
+    radial-gradient(900px 620px at 82% 4%, rgba(90, 106, 78, 0.1), transparent 64%),
+    radial-gradient(680px 480px at 0% 96%, rgba(133, 98, 61, 0.07), transparent 60%);
 
   color-scheme: light;
 }
@@ -79,37 +96,62 @@
    here too, or dark mode will silently inherit the light one.
    -------------------------------------------------------------------------- */
 html[data-theme="dark"] {
-  --as-bg: #16181a;
-  --as-bg-soft: #1e2124;
-  --as-bg-deep: #101214;
+  --as-bg: #1a1712;
+  --as-bg-soft: #221e17;
+  --as-bg-deep: #131009;
+  --as-bg-sage: #232a22;
 
-  --as-ink: #ece8e2;
-  --as-ink-dim: rgba(236, 232, 226, 0.7);
-  --as-ink-mute: rgba(236, 232, 226, 0.48);
-  --as-ink-faint: rgba(236, 232, 226, 0.24);
+  --as-band: #322b21;
+  --as-band-ink: #ede6d8;
+  --as-band-ink-dim: rgba(237, 230, 216, 0.7);
+  --as-band-ink-mute: rgba(237, 230, 216, 0.52);
+  --as-band-rule: rgba(237, 230, 216, 0.16);
+  --as-band-highlight: #d9b98c;
 
-  --as-rule: rgba(236, 232, 226, 0.13);
-  --as-rule-strong: rgba(236, 232, 226, 0.26);
+  --as-ink: #ede6d8;
+  --as-ink-dim: rgba(237, 230, 216, 0.72);
+  --as-ink-mute: rgba(237, 230, 216, 0.56);
+  --as-ink-faint: rgba(237, 230, 216, 0.24);
 
-  --as-accent: #5fbfae;
-  --as-accent-deep: #7fd4c4;
-  --as-accent-soft: rgba(95, 191, 174, 0.13);
-  --as-accent-ring: rgba(95, 191, 174, 0.4);
-  --as-on-accent: #0f1a18;
+  --as-rule: rgba(237, 230, 216, 0.13);
+  --as-rule-strong: rgba(237, 230, 216, 0.26);
 
-  --as-highlight: #e09a63;
-  --as-highlight-soft: rgba(224, 154, 99, 0.14);
+  --as-accent: #a3b492; /* light sage — the moss, lifted for dark ground */
+  --as-accent-deep: #bccbab;
+  --as-accent-soft: rgba(163, 180, 146, 0.13);
+  --as-accent-ring: rgba(163, 180, 146, 0.4);
+  --as-on-accent: #1a1712;
 
-  --as-card: #1e2124;
-  --as-card-edge: rgba(236, 232, 226, 0.12);
+  --as-highlight: #c9a177; /* walnut, lifted */
+  --as-highlight-soft: rgba(201, 161, 119, 0.14);
+
+  --as-card: #221e17;
+  --as-card-edge: rgba(237, 230, 216, 0.12);
   --as-card-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 8px 24px rgba(0, 0, 0, 0.4);
   --as-card-shadow-hover: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 18px 38px rgba(0, 0, 0, 0.55);
 
+  --as-photo: #2b271f;
+  --as-photo-edge: rgba(237, 230, 216, 0.14);
+
   --as-ambient:
-    radial-gradient(900px 620px at 82% 6%, rgba(95, 191, 174, 0.09), transparent 64%),
-    radial-gradient(680px 480px at 0% 100%, rgba(224, 154, 99, 0.06), transparent 60%);
+    radial-gradient(900px 620px at 82% 4%, rgba(163, 180, 146, 0.08), transparent 64%),
+    radial-gradient(680px 480px at 0% 96%, rgba(201, 161, 119, 0.06), transparent 60%);
 
   color-scheme: dark;
+}
+
+/* --------------------------------------------------------------------------
+   MOTION
+   One animation on the site: the strip of words that drifts under the hero.
+   It halts entirely for visitors who ask for reduced motion.
+   -------------------------------------------------------------------------- */
+@keyframes as-drift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -122,6 +164,13 @@ html[data-theme="dark"] {
   --color-as-bg: var(--as-bg);
   --color-as-bg-soft: var(--as-bg-soft);
   --color-as-bg-deep: var(--as-bg-deep);
+  --color-as-bg-sage: var(--as-bg-sage);
+  --color-as-band: var(--as-band);
+  --color-as-band-ink: var(--as-band-ink);
+  --color-as-band-ink-dim: var(--as-band-ink-dim);
+  --color-as-band-ink-mute: var(--as-band-ink-mute);
+  --color-as-band-rule: var(--as-band-rule);
+  --color-as-band-highlight: var(--as-band-highlight);
   --color-as-ink: var(--as-ink);
   --color-as-ink-dim: var(--as-ink-dim);
   --color-as-ink-mute: var(--as-ink-mute);
@@ -137,12 +186,20 @@ html[data-theme="dark"] {
   --color-as-highlight-soft: var(--as-highlight-soft);
   --color-as-card: var(--as-card);
   --color-as-card-edge: var(--as-card-edge);
+  --color-as-photo: var(--as-photo);
+  --color-as-photo-edge: var(--as-photo-edge);
 
-  /* Typography — font-display for headings, font-sans for everything else */
+  /* Typography — font-display for headings, font-sans for everything else.
+     Fraunces has a true italic, which is what carries the second half of
+     every headline on this site. */
   --font-display: "Fraunces Variable", Georgia, "Times New Roman", serif;
   --font-sans: "Inter Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
 
   /* Layout rhythm */
   --spacing-section: 6rem; /* vertical padding between major sections */
   --radius-card: 0.875rem;
+  --radius-photo: 1.75rem; /* the generous curve on every photo block */
+
+  /* Motion */
+  --animate-drift: as-drift 46s linear infinite;
 }

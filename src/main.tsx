@@ -4,6 +4,7 @@ import { createRoot } from "react-dom/client";
 // Fonts are bundled locally (no Google Fonts request) — see theme.css for the
 // font-family tokens that reference them.
 import "@fontsource-variable/fraunces";
+import "@fontsource-variable/fraunces/wght-italic.css";
 import "@fontsource-variable/inter";
 
 import "./styles/index.css";
