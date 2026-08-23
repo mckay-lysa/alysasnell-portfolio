@@ -41,18 +41,16 @@ look at when she decides how the site should look.
 - [x] She adds `mckayqsnell` as a collaborator
       (Settings → Collaborators → Add people); invite accepted — push confirmed
 - [x] `git init` here, commit the scaffold, push to her repo
-- [ ] **Protect main.** Settings → Rules → Rulesets → New branch ruleset,
-      named `protect-main`:
-  - [ ] **Enforcement status: Active** — it defaults to Disabled, easy to miss
-  - [ ] Target branches → Add a target → **Default branch**
-  - [ ] Require a pull request before merging → **1 approval**
-  - [ ] Require review from **Code Owners** (this is what makes CODEOWNERS bite)
-  - [ ] Require status checks to pass → add `Typecheck · Lint · Test · Build`
-        and `End-to-end (Playwright)`
+- [x] **Protect main.** Settings → Rules → Rulesets → New branch ruleset,
+      named `protect-main` — **done, and active.** Verified via the API:
+      enforcement `active`, 1 approval, code-owner review on, both CI checks
+      required, deletion and force-push blocked. Phase 1.5 below revises it.
 
 > **Order matters:** status check names don't appear in the search box until CI
 > has run at least once. Push the scaffold, open one throwaway PR to make CI
 > run, then come back and add the checks.
+
+---
 
 ### Dependabot — turn both of these on
 
@@ -77,6 +75,109 @@ them, which is the worst of both worlds for a repo nobody checks daily.
 > pnpm v7–v10; this repo pins pnpm 11. If Dependabot PRs show up unable to
 > update `pnpm-lock.yaml`, drop `packageManager` in `package.json` to the
 > latest pnpm 10 and regenerate the lockfile.
+
+---
+
+## ☐ Phase 1.5 — GitHub org, admin, and the review model
+
+> **Why this exists.** Two problems showed up the first time McKay opened a PR:
+>
+> 1. **He can't approve his own pull requests.** GitHub hardcodes author ≠
+>    approver. No permission level changes it — not admin, not owner. Combined
+>    with `* @mckayqsnell` in CODEOWNERS, his own infra PRs were unmergeable by
+>    anyone.
+> 2. **He can't be made an admin.** A repo owned by a **personal account** has
+>    exactly two permission levels — owner and collaborator. Roles
+>    (Read/Triage/Write/Maintain/Admin) are an **organization-only** feature, so
+>    there is no button on Alysa's account that grants admin, and only Admin can
+>    edit rulesets. There is no fix for this short of moving the repo.
+>
+> Meanwhile the `*` in CODEOWNERS put McKay on **every** PR, including one-line
+> copy tweaks — the opposite of the point.
+>
+> Moving to a free org fixes all of it, and lets the bypass name **one specific
+> user** instead of a role. On a personal repo bypass actors are role-based
+> only, so "just McKay" is not expressible there.
+
+**Alysa only has to do two things in this whole phase: click an email link, and
+click Transfer.** Everything else is McKay's, and after the transfer he never
+needs her for a settings change again. The transfer itself can't be delegated —
+it requires administrator access to the repo, which on a personal account only
+the owner has.
+
+### McKay — create the org
+
+- [ ] Profile picture → **Settings** → sidebar "Access" → **Organizations** →
+      **New organization** → **Free** plan (unlimited, free for public repos)
+- [ ] Invite `alysasnell` as a **Member**. Confirm Settings → Member privileges
+      lets members create **public** repositories — that's the default, and the
+      transfer fails without it.
+
+### Alysa — two clicks
+
+- [ ] Accept the org invite from her email
+- [ ] Her repo → **Settings** → scroll to **Danger Zone** → **Transfer** →
+      "Select one of my organizations" → the new org → type the repo name →
+      **I understand, transfer this repository**
+
+> Issues, PRs, stars, watchers, webhooks, secrets, deploy keys, and full commit
+> history all move. Existing collaborators carry over. Old URLs redirect.
+
+### McKay — now an admin, so all of this is his
+
+- [ ] Settings → Collaborators and teams → confirm `alysasnell` has **Write**
+      (she needs to merge her own copy PRs; she does not need Admin)
+- [ ] Settings → Rules → Rulesets → `protect-main`:
+  - [ ] Required approvals: **1 → 0**. This is the switch that lets Alysa merge
+        a copy change herself. Code-owner review still blocks anything frozen.
+  - [ ] **Keep** "Require review from Code Owners" checked — it is now the
+        entire gate
+  - [ ] Required status checks → add **`Guardrails (frozen files)`**
+        (won't appear in the search box until that job has run once)
+  - [ ] **Bypass list** → Add bypass → the user **`@mckayqsnell`** → **Always**
+        ("Always", not "For pull requests only" — pull-requests-only still
+        blocks direct pushes to `main`)
+- [ ] Verify: `gh api repos/<org>/alysasnell-portfolio/rulesets/<id> --jq .current_user_can_bypass`
+      should no longer say `never`
+- [ ] `git remote set-url origin <new-url>` in every local clone
+
+### McKay — reconnect the two GitHub Apps
+
+The repo moved, so app installations scoped to Alysa's account no longer cover
+it.
+
+- [ ] Install the **Cloudflare Workers and Pages** GitHub App on the org, then
+      Worker → Settings → Build → re-point the Git connection at the new repo
+- [ ] Reauthorize the **Claude GitHub App** for the new location so Alysa's
+      cloud sessions can still open PRs
+
+> **Watch the first PR after the move closely.** The Cloudflare connection is
+> the piece most likely to come back wrong, and a broken build there is exactly
+> the failure that already cost a round of debugging once.
+
+### What the review model becomes
+
+| A PR that changes…                        | Needs McKay? | Who merges |
+| ----------------------------------------- | ------------ | ---------- |
+| `src/`, `public/`, `docs/`                | No           | Alysa      |
+| anything in `.github/CODEOWNERS` patterns | **Yes**      | McKay      |
+
+Set by [`.github/CODEOWNERS`](.github/CODEOWNERS), which lists only the frozen
+paths. GitHub requests a code owner's review **only** when a PR actually changes
+a matching file, so the gate is conditional on content rather than on a label
+anyone could forget to add.
+
+> **Unverified, worth a throwaway PR:** that required-approvals **0** plus
+> code-owner review reliably blocks. The docs don't state the interaction for
+> rulesets. Test it by opening a PR that touches only `CLAUDE.md` and confirming
+> the merge button is blocked before trusting the setup.
+
+> **Open question for McKay:** `e2e/` and `src/**/*.test.tsx` are **not** frozen,
+> so Claude can edit tests without review. CLAUDE.md calls weakening a check
+> "the single worst thing you can do in this repo." Freezing them would close
+> that hole — but a legitimate copy change often has to update a test that
+> asserts the old text, which would route ordinary copy edits to McKay and
+> defeat the point. Left open deliberately.
 
 ---
 
