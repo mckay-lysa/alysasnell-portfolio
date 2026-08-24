@@ -27,59 +27,81 @@
      THE PALETTE — these are the real values, copied from theme.css.
      ------------------------------------------------------------------------ */
   :root {
-    --as-bg: #FBF9F6;
-    --as-bg-soft: #FFFFFF;
-    --as-bg-deep: #F2EDE6;
+    --as-bg: #F5F0E6;
+    --as-bg-soft: #FDFAF3;
+    --as-bg-deep: #EBE3D4;
+    --as-bg-sage: #DCDDCF;
 
-    --as-ink: #23201D;
-    --as-ink-dim: rgba(35, 32, 29, 0.68);
-    --as-ink-mute: rgba(35, 32, 29, 0.46);
-    --as-ink-faint: rgba(35, 32, 29, 0.24);
+    --as-band: #3A3227;
+    --as-band-ink: #F0E9DB;
+    --as-band-ink-dim: rgba(240, 233, 219, 0.70);
+    --as-band-ink-mute: rgba(240, 233, 219, 0.52);
+    --as-band-rule: rgba(240, 233, 219, 0.18);
+    --as-band-highlight: #D9B98C;
 
-    --as-rule: rgba(35, 32, 29, 0.12);
-    --as-rule-strong: rgba(35, 32, 29, 0.24);
+    --as-ink: #2C2418;
+    --as-ink-dim: rgba(44, 36, 24, 0.72);
+    --as-ink-mute: rgba(44, 36, 24, 0.64);
+    --as-ink-faint: rgba(44, 36, 24, 0.22);
 
-    --as-accent: #1F6F63;
-    --as-accent-deep: #17564C;
-    --as-accent-soft: rgba(31, 111, 99, 0.10);
-    --as-accent-ring: rgba(31, 111, 99, 0.34);
-    --as-on-accent: #FBF9F6;
+    --as-rule: rgba(44, 36, 24, 0.13);
+    --as-rule-strong: rgba(44, 36, 24, 0.26);
 
-    --as-highlight: #C2703F;
-    --as-highlight-soft: rgba(194, 112, 63, 0.12);
+    --as-accent: #5A6A4E;
+    --as-accent-deep: #46543C;
+    --as-accent-soft: rgba(90, 106, 78, 0.10);
+    --as-accent-ring: rgba(90, 106, 78, 0.35);
+    --as-on-accent: #F5F0E6;
 
-    --as-card: #FFFFFF;
-    --as-card-edge: rgba(35, 32, 29, 0.10);
+    --as-highlight: #85623D;
+    --as-highlight-soft: rgba(133, 98, 61, 0.12);
+
+    --as-card: #FDFAF3;
+    --as-card-edge: rgba(44, 36, 24, 0.10);
     --as-card-shadow: 0 1px 0 rgba(255,255,255,.6) inset, 0 8px 24px rgba(80,60,40,.06);
+
+    --as-photo: #E2DBCA;
+    --as-photo-edge: rgba(44, 36, 24, 0.14);
 
     color-scheme: light;
   }
 
   :root[data-theme="dark"] {
-    --as-bg: #16181A;
-    --as-bg-soft: #1E2124;
-    --as-bg-deep: #101214;
+    --as-bg: #1A1712;
+    --as-bg-soft: #221E17;
+    --as-bg-deep: #131009;
+    --as-bg-sage: #232A22;
 
-    --as-ink: #ECE8E2;
-    --as-ink-dim: rgba(236, 232, 226, 0.70);
-    --as-ink-mute: rgba(236, 232, 226, 0.48);
-    --as-ink-faint: rgba(236, 232, 226, 0.24);
+    --as-band: #322B21;
+    --as-band-ink: #EDE6D8;
+    --as-band-ink-dim: rgba(237, 230, 216, 0.70);
+    --as-band-ink-mute: rgba(237, 230, 216, 0.52);
+    --as-band-rule: rgba(237, 230, 216, 0.16);
+    --as-band-highlight: #D9B98C;
 
-    --as-rule: rgba(236, 232, 226, 0.13);
-    --as-rule-strong: rgba(236, 232, 226, 0.26);
+    --as-ink: #EDE6D8;
+    --as-ink-dim: rgba(237, 230, 216, 0.72);
+    --as-ink-mute: rgba(237, 230, 216, 0.56);
+    --as-ink-faint: rgba(237, 230, 216, 0.24);
 
-    --as-accent: #5FBFAE;
-    --as-accent-deep: #7FD4C4;
-    --as-accent-soft: rgba(95, 191, 174, 0.13);
-    --as-accent-ring: rgba(95, 191, 174, 0.40);
-    --as-on-accent: #0F1A18;
+    --as-rule: rgba(237, 230, 216, 0.13);
+    --as-rule-strong: rgba(237, 230, 216, 0.26);
 
-    --as-highlight: #E09A63;
-    --as-highlight-soft: rgba(224, 154, 99, 0.14);
+    --as-accent: #A3B492;
+    --as-accent-deep: #BCCBAB;
+    --as-accent-soft: rgba(163, 180, 146, 0.13);
+    --as-accent-ring: rgba(163, 180, 146, 0.40);
+    --as-on-accent: #1A1712;
 
-    --as-card: #1E2124;
-    --as-card-edge: rgba(236, 232, 226, 0.12);
+    --as-highlight: #C9A177;
+    --as-highlight-soft: rgba(201, 161, 119, 0.14);
+
+    --as-card: #221E17;
+    --as-card-edge: rgba(237, 230, 216, 0.12);
     --as-card-shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 8px 24px rgba(0,0,0,.4);
+
+    --as-photo: #2B271F;
+    --as-photo-edge: rgba(237, 230, 216, 0.14);
 
     color-scheme: dark;
   }
@@ -152,9 +174,9 @@
   .type-row:last-child { border-bottom: 0; }
   .type-label { flex: 0 0 8.5rem; font-size: .74rem; color: var(--as-ink-mute); font-family: ui-monospace, Menlo, monospace; }
 
-  .display-xl { font-family: Fraunces, Georgia, serif; font-size: 3.75rem; font-weight: 600; line-height: 1.08; }
-  .display-l  { font-family: Fraunces, Georgia, serif; font-size: 2.25rem; font-weight: 600; line-height: 1.15; }
-  .display-m  { font-family: Fraunces, Georgia, serif; font-size: 1.125rem; font-weight: 600; }
+  .display-xl { font-family: Fraunces, Georgia, serif; font-size: 3.75rem; font-weight: 400; line-height: 1.08; }
+  .display-l  { font-family: Fraunces, Georgia, serif; font-size: 2.25rem; font-weight: 400; line-height: 1.15; }
+  .display-m  { font-family: Fraunces, Georgia, serif; font-size: 1.125rem; font-weight: 400; }
   .body-l     { font-size: 1.5rem; color: var(--as-ink-dim); line-height: 1.5; }
   .body-m     { font-size: 1rem; }
   .body-s     { font-size: .875rem; color: var(--as-ink-dim); }
@@ -227,10 +249,11 @@
       the same pull request.
     </p>
     <p class="note">
-      <strong>This is a starting point, not a finished design.</strong> The palette below is a
-      sensible default so the site looks presentable on day one. Alysa should change it to
-      whatever she actually wants — that's the whole point of having it all in one place.
-      Flip this page to dark mode with the button in the corner to check both palettes.
+      <strong>Earthy, muted, and quiet on purpose.</strong> Cream and beige paper, a soft sage
+      band, walnut brown, and a deep espresso band the page drops into for emphasis. Nothing is
+      saturated. If any of it should be warmer, cooler, or louder, change it here — that's the
+      whole point of having it in one place. Flip this page to dark mode with the button in the
+      corner to check both palettes.
     </p>
   </header>
 
@@ -245,22 +268,62 @@
     </p>
 
     <h3 style="margin-top:.5rem">Surfaces</h3>
+    <p class="body-s">
+      Four grounds, and every section on the site sits on one of them. They alternate as you
+      scroll — cream, beige, sage, espresso — so the page changes chapter without saying so.
+    </p>
     <div class="swatches">
       <div class="swatch">
         <div class="chip" style="background:var(--as-bg)"></div>
-        <div class="meta"><span class="token">--as-bg</span><span class="use">The page background</span><span class="hex">#FBF9F6 / #16181A</span></div>
-      </div>
-      <div class="swatch">
-        <div class="chip" style="background:var(--as-bg-soft)"></div>
-        <div class="meta"><span class="token">--as-bg-soft</span><span class="use">Raised surfaces</span><span class="hex">#FFFFFF / #1E2124</span></div>
+        <div class="meta"><span class="token">--as-bg</span><span class="use">The page background — warm cream paper</span><span class="hex">#F5F0E6 / #1A1712</span></div>
       </div>
       <div class="swatch">
         <div class="chip" style="background:var(--as-bg-deep)"></div>
-        <div class="meta"><span class="token">--as-bg-deep</span><span class="use">Alternating section bands</span><span class="hex">#F2EDE6 / #101214</span></div>
+        <div class="meta"><span class="token">--as-bg-deep</span><span class="use">The recessed beige band</span><span class="hex">#EBE3D4 / #131009</span></div>
+      </div>
+      <div class="swatch">
+        <div class="chip" style="background:var(--as-bg-sage)"></div>
+        <div class="meta"><span class="token">--as-bg-sage</span><span class="use">The muted sage band</span><span class="hex">#DCDDCF / #232A22</span></div>
+      </div>
+      <div class="swatch">
+        <div class="chip" style="background:var(--as-band)"></div>
+        <div class="meta"><span class="token">--as-band</span><span class="use">The deep espresso band</span><span class="hex">#3A3227 / #322B21</span></div>
+      </div>
+      <div class="swatch">
+        <div class="chip" style="background:var(--as-bg-soft)"></div>
+        <div class="meta"><span class="token">--as-bg-soft</span><span class="use">Raised surfaces</span><span class="hex">#FDFAF3 / #221E17</span></div>
       </div>
       <div class="swatch">
         <div class="chip" style="background:var(--as-card)"></div>
-        <div class="meta"><span class="token">--as-card</span><span class="use">Card background</span><span class="hex">#FFFFFF / #1E2124</span></div>
+        <div class="meta"><span class="token">--as-card</span><span class="use">Card background</span><span class="hex">#FDFAF3 / #221E17</span></div>
+      </div>
+      <div class="swatch">
+        <div class="chip" style="background:var(--as-photo)"></div>
+        <div class="meta"><span class="token">--as-photo</span><span class="use">Photo blocks, before the real image lands</span><span class="hex">#E2DBCA / #2B271F</span></div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:1rem">On the espresso band</h3>
+    <p class="body-s">
+      The dark band flips the ink. It has its own small set of tokens so text stays readable
+      when the ground goes dark — never reuse the normal ink tokens there.
+    </p>
+    <div class="swatches">
+      <div class="swatch">
+        <div class="chip" style="background:var(--as-band-ink)"></div>
+        <div class="meta"><span class="token">--as-band-ink</span><span class="use">Headings and copy on the band</span><span class="hex">#F0E9DB / #EDE6D8</span></div>
+      </div>
+      <div class="swatch">
+        <div class="chip" style="background:var(--as-band-ink-dim)"></div>
+        <div class="meta"><span class="token">--as-band-ink-dim</span><span class="use">Secondary copy on the band</span><span class="hex">70% band ink</span></div>
+      </div>
+      <div class="swatch">
+        <div class="chip" style="background:var(--as-band-ink-mute)"></div>
+        <div class="meta"><span class="token">--as-band-ink-mute</span><span class="use">Labels and metadata on the band</span><span class="hex">52% band ink</span></div>
+      </div>
+      <div class="swatch">
+        <div class="chip" style="background:var(--as-band-highlight)"></div>
+        <div class="meta"><span class="token">--as-band-highlight</span><span class="use">The big numbers on the band</span><span class="hex">#D9B98C / #D9B98C</span></div>
       </div>
     </div>
 
@@ -269,36 +332,37 @@
     <div class="swatches">
       <div class="swatch">
         <div class="chip" style="background:var(--as-ink)"></div>
-        <div class="meta"><span class="token">--as-ink</span><span class="use">Headings and body copy</span><span class="hex">#23201D / #ECE8E2</span></div>
+        <div class="meta"><span class="token">--as-ink</span><span class="use">Headings and body copy</span><span class="hex">#2C2418 / #EDE6D8</span></div>
       </div>
       <div class="swatch">
         <div class="chip" style="background:var(--as-ink-dim)"></div>
-        <div class="meta"><span class="token">--as-ink-dim</span><span class="use">Secondary copy, descriptions</span><span class="hex">68% ink</span></div>
+        <div class="meta"><span class="token">--as-ink-dim</span><span class="use">Secondary copy, descriptions</span><span class="hex">72% ink</span></div>
       </div>
       <div class="swatch">
         <div class="chip" style="background:var(--as-ink-mute)"></div>
-        <div class="meta"><span class="token">--as-ink-mute</span><span class="use">Captions, dates, metadata</span><span class="hex">46% ink</span></div>
+        <div class="meta"><span class="token">--as-ink-mute</span><span class="use">Captions, dates, metadata</span><span class="hex">64% ink</span></div>
       </div>
       <div class="swatch">
         <div class="chip" style="background:var(--as-ink-faint)"></div>
-        <div class="meta"><span class="token">--as-ink-faint</span><span class="use">Decorative, disabled</span><span class="hex">24% ink</span></div>
+        <div class="meta"><span class="token">--as-ink-faint</span><span class="use">Decorative, disabled</span><span class="hex">22% ink</span></div>
       </div>
     </div>
 
     <h3 style="margin-top:1rem">Accent &amp; highlight</h3>
     <p class="body-s">
-      <strong>Accent</strong> is the brand color — buttons, links, active states. <strong>Highlight</strong>
-      is the second voice, reserved for the numbers that make her case. Two accents is the limit;
+      <strong>Accent</strong> is a muted moss green — buttons, links, and the italic half of every
+      headline. <strong>Highlight</strong> is walnut brown, the second voice, reserved for the
+      year markers in the story and the numbers that make her case. Two accents is the limit;
       a third starts to look like a carnival.
     </p>
     <div class="swatches">
       <div class="swatch">
         <div class="chip" style="background:var(--as-accent)"></div>
-        <div class="meta"><span class="token">--as-accent</span><span class="use">Primary buttons, links</span><span class="hex">#1F6F63 / #5FBFAE</span></div>
+        <div class="meta"><span class="token">--as-accent</span><span class="use">Primary buttons, links</span><span class="hex">#5A6A4E / #A3B492</span></div>
       </div>
       <div class="swatch">
         <div class="chip" style="background:var(--as-accent-deep)"></div>
-        <div class="meta"><span class="token">--as-accent-deep</span><span class="use">Hover and pressed states</span><span class="hex">#17564C / #7FD4C4</span></div>
+        <div class="meta"><span class="token">--as-accent-deep</span><span class="use">Hover and pressed states</span><span class="hex">#46543C / #BCCBAB</span></div>
       </div>
       <div class="swatch">
         <div class="chip" style="background:var(--as-accent-soft); border-bottom:1px solid var(--as-card-edge)"></div>
@@ -306,7 +370,7 @@
       </div>
       <div class="swatch">
         <div class="chip" style="background:var(--as-highlight)"></div>
-        <div class="meta"><span class="token">--as-highlight</span><span class="use">Stat numbers, emphasis</span><span class="hex">#C2703F / #E09A63</span></div>
+        <div class="meta"><span class="token">--as-highlight</span><span class="use">Stat numbers, emphasis</span><span class="hex">#85623D / #C9A177</span></div>
       </div>
     </div>
 
@@ -366,9 +430,11 @@
     </div>
     <table>
       <tr><th>Rule</th><th>Value</th></tr>
-      <tr><td>Content column width</td><td><code>max-w-3xl</code> — 768px. Long lines are hard to read; this keeps them comfortable.</td></tr>
+      <tr><td>Reading width</td><td><code>max-w-3xl</code> — 768px. Used for the story and anything else meant to be read straight through; long lines are hard to follow.</td></tr>
+      <tr><td>Wide width</td><td><code>max-w-6xl</code> — 1152px. Used where cards, photos, or the numbers need room to breathe.</td></tr>
       <tr><td>Section padding</td><td><code>--spacing-section</code> — 6rem top and bottom on desktop, less on phones.</td></tr>
       <tr><td>Card corners</td><td><code>--radius-card</code> — 0.875rem.</td></tr>
+      <tr><td>Photo corners</td><td><code>--radius-photo</code> — 1.75rem. Photos get a more generous curve than cards.</td></tr>
       <tr><td>Buttons</td><td>Fully rounded (<code>999px</code>) — friendlier than square corners.</td></tr>
     </table>
   </section>
@@ -392,11 +458,51 @@
       keyboard users navigate, so it never gets removed.
     </p>
 
-    <h3 style="margin-top:1rem">Stats</h3>
-    <p class="body-s">Her numbers are the portfolio. They get the highlight color and their own visual treatment.</p>
+    <h3 style="margin-top:1rem">Stats on the band</h3>
+    <p class="body-s">
+      Her numbers are the portfolio, so they get a section to themselves on the espresso band —
+      set large in the serif, in <code>--as-band-highlight</code>, over a hairline rule.
+    </p>
+    <div class="demo" style="background:var(--as-band); border-color:var(--as-band-rule); gap:2.5rem;">
+      <div style="border-top:1px solid var(--as-band-rule); padding-top:.8rem; min-width:11rem;">
+        <b style="display:block; font-family:Fraunces, Georgia, serif; font-size:2.2rem; line-height:1; color:var(--as-band-highlight); font-weight:400;">60+</b>
+        <span style="display:block; margin-top:.6rem; font-size:.82rem; color:var(--as-band-ink-dim);">boutique customers onboarded every month</span>
+      </div>
+      <div style="border-top:1px solid var(--as-band-rule); padding-top:.8rem; min-width:11rem;">
+        <b style="display:block; font-family:Fraunces, Georgia, serif; font-size:2.2rem; line-height:1; color:var(--as-band-highlight); font-weight:400;">1,200+</b>
+        <span style="display:block; margin-top:.6rem; font-size:.82rem; color:var(--as-band-ink-dim);">Shopify store owners supported</span>
+      </div>
+    </div>
+
+    <h3 style="margin-top:1rem">Headlines</h3>
+    <p class="body-s">
+      Every heading on the site is set in two halves: the first upright, the second in
+      <em>italic</em> and colored. It's what gives the page its voice.
+    </p>
+    <div class="demo" style="display:block;">
+      <p style="font-family:Fraunces, Georgia, serif; font-size:1.9rem; line-height:1.15; margin:0;">
+        The story <em style="color:var(--as-accent)">so far.</em>
+      </p>
+      <p style="font-family:Fraunces, Georgia, serif; font-size:1.9rem; line-height:1.15; margin:.5rem 0 0;">
+        What the work <em style="color:var(--as-highlight)">adds up to.</em>
+      </p>
+    </div>
+
+    <h3 style="margin-top:1rem">Photo blocks</h3>
+    <p class="body-s">
+      Photos sit in rounded blocks, some tilted a degree or two. Until a real image is dropped
+      into <code>public/</code> and named in <code>src/content/site.ts</code>, the block shows a
+      labeled placeholder at exactly the size the photo will take — so the layout never moves.
+    </p>
     <div class="demo">
-      <div class="stat"><b>60+</b><span>boutique customers onboarded every month</span></div>
-      <div class="stat"><b>1,200+</b><span>Shopify store owners supported</span></div>
+      <div style="width:9rem; height:11rem; border-radius:1.75rem; background:var(--as-photo); border:1px solid var(--as-photo-edge); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.35rem;">
+        <span style="font-size:.68rem; letter-spacing:.18em; text-transform:uppercase; color:var(--as-ink-mute);">Portrait</span>
+        <span style="font-size:.7rem; color:var(--as-ink-mute);">Tall · head and shoulders</span>
+      </div>
+      <div style="width:13rem; height:8rem; border-radius:1.75rem; background:var(--as-photo); border:1px solid var(--as-photo-edge); transform:rotate(2deg); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.35rem;">
+        <span style="font-size:.68rem; letter-spacing:.18em; text-transform:uppercase; color:var(--as-ink-mute);">A detail</span>
+        <span style="font-size:.7rem; color:var(--as-ink-mute);">Wide · close-up</span>
+      </div>
     </div>
 
     <h3 style="margin-top:1rem">Cards</h3>
